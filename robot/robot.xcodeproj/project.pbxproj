@@ -7,21 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		BDDE491E1EE1587E0010B96E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDDE491D1EE1587E0010B96E /* AppDelegate.swift */; };
-		BDDE49201EE1587E0010B96E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDDE491F1EE1587E0010B96E /* ViewController.swift */; };
-		BDDE49231EE1587E0010B96E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BDDE49211EE1587E0010B96E /* Main.storyboard */; };
-		BDDE49251EE1587E0010B96E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BDDE49241EE1587E0010B96E /* Assets.xcassets */; };
-		BDDE49281EE1587E0010B96E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BDDE49261EE1587E0010B96E /* LaunchScreen.storyboard */; };
+		BDDE49421EE15D160010B96E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BDDE49341EE15D160010B96E /* Assets.xcassets */; };
+		BDDE49431EE15D160010B96E /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BDDE49361EE15D160010B96E /* Info.plist */; };
+		BDDE49441EE15D160010B96E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDDE49411EE15D160010B96E /* AppDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		BDDE491A1EE1587E0010B96E /* robot.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = robot.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		BDDE491D1EE1587E0010B96E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		BDDE491F1EE1587E0010B96E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		BDDE49221EE1587E0010B96E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		BDDE49241EE1587E0010B96E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		BDDE49271EE1587E0010B96E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		BDDE49291EE1587E0010B96E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BDDE49341EE15D160010B96E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		BDDE49361EE15D160010B96E /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BDDE49411EE15D160010B96E /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,14 +49,123 @@
 		BDDE491C1EE1587E0010B96E /* robot */ = {
 			isa = PBXGroup;
 			children = (
-				BDDE491D1EE1587E0010B96E /* AppDelegate.swift */,
-				BDDE491F1EE1587E0010B96E /* ViewController.swift */,
-				BDDE49211EE1587E0010B96E /* Main.storyboard */,
-				BDDE49241EE1587E0010B96E /* Assets.xcassets */,
-				BDDE49261EE1587E0010B96E /* LaunchScreen.storyboard */,
-				BDDE49291EE1587E0010B96E /* Info.plist */,
+				BDDE49401EE15D160010B96E /* AppDelegate */,
+				BDDE493F1EE15D160010B96E /* Base */,
+				BDDE49311EE15D160010B96E /* XHTabbar */,
+				BDDE49321EE15D160010B96E /* ThridFramework */,
+				BDDE49331EE15D160010B96E /* Resource */,
+				BDDE49391EE15D160010B96E /* Networking */,
+				BDDE493A1EE15D160010B96E /* More */,
+				BDDE493B1EE15D160010B96E /* Macro */,
+				BDDE493C1EE15D160010B96E /* HomeVC */,
+				BDDE493D1EE15D160010B96E /* CodeFragment */,
+				BDDE493E1EE15D160010B96E /* Base.lproj */,
 			);
 			path = robot;
+			sourceTree = "<group>";
+		};
+		BDDE49311EE15D160010B96E /* XHTabbar */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = XHTabbar;
+			sourceTree = "<group>";
+		};
+		BDDE49321EE15D160010B96E /* ThridFramework */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ThridFramework;
+			sourceTree = "<group>";
+		};
+		BDDE49331EE15D160010B96E /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				BDDE49341EE15D160010B96E /* Assets.xcassets */,
+				BDDE49351EE15D160010B96E /* image */,
+				BDDE49361EE15D160010B96E /* Info.plist */,
+				BDDE49371EE15D160010B96E /* other */,
+				BDDE49381EE15D160010B96E /* sound */,
+			);
+			path = Resource;
+			sourceTree = "<group>";
+		};
+		BDDE49351EE15D160010B96E /* image */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = image;
+			sourceTree = "<group>";
+		};
+		BDDE49371EE15D160010B96E /* other */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = other;
+			sourceTree = "<group>";
+		};
+		BDDE49381EE15D160010B96E /* sound */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = sound;
+			sourceTree = "<group>";
+		};
+		BDDE49391EE15D160010B96E /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
+		BDDE493A1EE15D160010B96E /* More */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = More;
+			sourceTree = "<group>";
+		};
+		BDDE493B1EE15D160010B96E /* Macro */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Macro;
+			sourceTree = "<group>";
+		};
+		BDDE493C1EE15D160010B96E /* HomeVC */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = HomeVC;
+			sourceTree = "<group>";
+		};
+		BDDE493D1EE15D160010B96E /* CodeFragment */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = CodeFragment;
+			sourceTree = "<group>";
+		};
+		BDDE493E1EE15D160010B96E /* Base.lproj */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Base.lproj;
+			sourceTree = "<group>";
+		};
+		BDDE493F1EE15D160010B96E /* Base */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Base;
+			sourceTree = "<group>";
+		};
+		BDDE49401EE15D160010B96E /* AppDelegate */ = {
+			isa = PBXGroup;
+			children = (
+				BDDE49411EE15D160010B96E /* AppDelegate.swift */,
+			);
+			path = AppDelegate;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -124,9 +228,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BDDE49281EE1587E0010B96E /* LaunchScreen.storyboard in Resources */,
-				BDDE49251EE1587E0010B96E /* Assets.xcassets in Resources */,
-				BDDE49231EE1587E0010B96E /* Main.storyboard in Resources */,
+				BDDE49431EE15D160010B96E /* Info.plist in Resources */,
+				BDDE49421EE15D160010B96E /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -137,31 +240,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BDDE49201EE1587E0010B96E /* ViewController.swift in Sources */,
-				BDDE491E1EE1587E0010B96E /* AppDelegate.swift in Sources */,
+				BDDE49441EE15D160010B96E /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXVariantGroup section */
-		BDDE49211EE1587E0010B96E /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				BDDE49221EE1587E0010B96E /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		BDDE49261EE1587E0010B96E /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				BDDE49271EE1587E0010B96E /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		BDDE492A1EE1587E0010B96E /* Debug */ = {
@@ -205,7 +288,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -249,7 +332,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -261,8 +344,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				DEVELOPMENT_TEAM = 7A99V6896N;
 				INFOPLIST_FILE = robot/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ios.robot;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -274,8 +359,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				DEVELOPMENT_TEAM = 7A99V6896N;
 				INFOPLIST_FILE = robot/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ios.robot;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -302,6 +389,7 @@
 				BDDE492E1EE1587E0010B96E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
