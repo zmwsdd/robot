@@ -15,7 +15,38 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+
+        window = UIWindow(frame:UIScreen.main.bounds)
+        window?.backgroundColor = UIColor.white
+        // 控制器名字数组
+        let  controllerArray = ["HomeVC","MoreVC"]
+        // 标题数组
+        let  titleArray = ["机器人","我的"]
+        // icon 未选中的数组
+        let  imageArray = ["tabbar_home","tabbar_more"]
+        // icon 选中的数组
+        let  selImageArray = ["tabbar_home_sel","tabbar_more_sel"]
+        // tabbar高度最小值49.0, 传nil或<49.0均按49.0处理
+        let height = CGFloat(49)
+        // tabBarController
+        let tabBarController = XHTabBar(controllerArray:controllerArray,titleArray: titleArray,imageArray: imageArray,selImageArray: selImageArray,height:height)
+        
+        window?.rootViewController = tabBarController
+        
+        // 设置数字角标(可选)
+        // tabBarController.showBadgeMark(badge: 100, index: 1)
+        // 设置小红点(可选)
+        // tabBarController.showPointMarkIndex(index: 2)
+        // 不显示小红点/数字角标(可选)
+        //tabBarController.hideMarkIndex(3)
+        // 手动切换tabBarController 显示到指定控制器(可选)
+        //tabBarController.showControllerIndex(3)
+        
+        window?.makeKeyAndVisible()
+        
+        //        GDPerformanceMonitor.sharedInstance.startMonitoring()
+
+
         return true
     }
 

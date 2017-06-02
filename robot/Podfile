@@ -1,0 +1,42 @@
+# Uncomment this line to define a global platform for your project
+platform :ios, ’10.0’
+use_frameworks!
+target ‘robot’ do
+
+ inhibit_all_warnings!
+ 
+ # 这个hud，是目前最广泛的，比SVProgressHUD更灵活。 - 我基于这个它，封装了一个便于项目利用的ProgressHUD
+ pod 'MBProgressHUD', '~> 1.0.0' 
+ # 导航栏很不错的. https://github.com/forkingdog/FDFullscreenPopGesture
+# pod 'FDFullscreenPopGesture', '~> 1.1'
+ # RAC
+ pod 'ReactiveCocoa', '~> 2.5'
+ # 友盟统计
+ pod 'UMengAnalytics-NO-IDFA', '~> 4.2.5'
+ # Bugly 崩溃捕获平台
+ pod 'Bugly', '~> 2.4.6'
+ 
+ # swift 版本也有，这个不错，这个自定义的多，需要导入源代码。 地址：https://github.com/CoderZhuXH/XHTabBar
+ 
+ # YYKit
+ pod 'YYKit', '~> 1.0.9',:inhibit_warnings => true
+
+
+# 避免数组越界，字段插入nil等崩溃
+pod 'XTSafeCollection', '~> 1.0.5'
+# 数据库存储
+pod 'FMDB', '~> 2.6.2'
+pod 'Masonry', '~> 1.0.2'
+pod 'IQKeyboardManager', '~> 4.0.4'
+pod 'MJRefresh', '~> 3.1.12'
+pod 'MJExtension', '~> 3.0.11'
+pod 'CocoaLumberjack', '~> 2.3.0'
+
+# ------------------------ Swift 相关的pod --------------------------
+pod 'Alamofire', '~> 4.3'
+pod 'SwiftyJSON', '~> 3.1.4'
+pod 'ObjectMapper', '~> 2.2.2'      # 解析model的
+pod 'Cartography', '~> 1.0.1'       # 自动布局
+pod 'IQKeyboardManagerSwift', '~> 4.0.8'
+
+end

@@ -1,0 +1,6 @@
+framework module XTSafeCollection {
+  umbrella header "XTSafeCollection-umbrella.h"
+
+  export *
+  module * { export * }
+}
