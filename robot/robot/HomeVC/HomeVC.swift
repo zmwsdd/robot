@@ -154,15 +154,15 @@ class HomeVC: SwifBaseViewController,SFSpeechRecognitionTaskDelegate {
             if let arr = result?["data"]["list"].arrayObject {
                 if arr.count == 1 {
                     if let dic = arr[0] as? [String: String] {
-                        weatherStr = String.init(format: "今天最低温度%@，度最高温度%@度，%@，%@",dic["qw2"]!,dic["qw1"]!,dic["fl2"]!,dic["fl1"]!)
+                        weatherStr = String.init(format: "今天最低温度%@度，最高温度%@度，%@，%@",dic["qw2"]!,dic["qw1"]!,dic["fl2"]!,dic["fl1"]!)
                     }
                 } else if arr.count == 2 {
                     if let dic = arr[0] as? [String: String] {
-                        weatherStr = String.init(format: "今天最低温度%@，度最高温度%@度，%@，%@",dic["qw2"]!,dic["qw1"]!,dic["fl2"]!,dic["fl1"]!)
+                        weatherStr = String.init(format: "今天最低温度%@度，最高温度%@度，%@，%@",dic["qw2"]!,dic["qw1"]!,dic["fl2"]!,dic["fl1"]!)
                     }
                     if (self.resultStr?.contains("明天"))! {
                         if let dic = arr[1] as? [String: String] {
-                            weatherStr = String.init(format: "今天最低温度%@，度最高温度%@度，%@，%@",dic["qw2"]!,dic["qw1"]!,dic["fl2"]!,dic["fl1"]!)
+                            weatherStr = String.init(format: "今天最低温度%@度，最高温度%@度，%@，%@",dic["qw2"]!,dic["qw1"]!,dic["fl2"]!,dic["fl1"]!)
                         }
                     }
                 }
