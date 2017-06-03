@@ -8,3 +8,7 @@
 
 import Foundation
 
+/// 应用即将进入后台
+let kNotificationWillEnterBg      =    "kNotificationWillEnterBg"
+/// 应用即将进入前台
+let kNotificationWillBecomeFront  =    "kNotificationWillBecomeFront"

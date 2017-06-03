@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import SwiftyJSON
+import AVFoundation
 
 /// 网络返回的成功码
 let kSuccessCode = 200
@@ -284,4 +285,31 @@ public class Tool: NSObject {
         
         return childController
     }
+    
+    /// 播放震动
+    public class func playVibration() {
+        AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
+    }
+
+   /// 停止震动
+    public class func stopVibration() {
+        AudioServicesRemoveSystemSoundCompletion(kSystemSoundID_Vibrate)
+    }
+    /// 设置声音变小 - 录音的时候需要小
+    public class func volumeLittle() {
+        let session = AVAudioSession.sharedInstance()
+        if session.category != AVAudioSessionCategoryPlayAndRecord {
+            try! session.setCategory(AVAudioSessionCategoryPlayAndRecord)
+            try! session.setActive(true)
+        }
+    }
+   /// 设置声音变大 - 播放声音的时候需要大
+    public class func volumeBig() {
+        let session = AVAudioSession.sharedInstance()
+        if session.category != AVAudioSessionCategoryPlayback {
+            try! session.setCategory(AVAudioSessionCategoryPlayback)
+            try! session.setActive(true)
+        }
+    }
+    
 }
