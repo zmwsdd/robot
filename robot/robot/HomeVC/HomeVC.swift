@@ -137,6 +137,8 @@ class HomeVC: SwifBaseViewController,SFSpeechRecognitionTaskDelegate {
             SLog("resultStr ==== \(String(describing: self.resultStr!))")
             if (self.resultStr?.contains("天气"))! {
                 self.weatherAction()
+            } else if self.resultStr != nil {
+                self.baiduNewsAction()
             } else {
                 SoundPlayer.defaltManager().play(self.resultStr, languageType: LanguageTypeChinese)
             }
@@ -154,15 +156,15 @@ class HomeVC: SwifBaseViewController,SFSpeechRecognitionTaskDelegate {
             if let arr = result?["data"]["list"].arrayObject {
                 if arr.count == 1 {
                     if let dic = arr[0] as? [String: String] {
-                        weatherStr = String.init(format: "今天最低温度%@度，最高温度%@度，%@，%@",dic["qw2"]!,dic["qw1"]!,dic["fl2"]!,dic["fl1"]!)
+                        weatherStr = String.init(format: "主人我已经查询成功！今天最低温度%@度，最高温度%@度，%@，%@",dic["qw2"]!,dic["qw1"]!,dic["fl2"]!,dic["fl1"]!)
                     }
                 } else if arr.count == 2 {
                     if let dic = arr[0] as? [String: String] {
-                        weatherStr = String.init(format: "今天最低温度%@度，最高温度%@度，%@，%@",dic["qw2"]!,dic["qw1"]!,dic["fl2"]!,dic["fl1"]!)
+                        weatherStr = String.init(format: "主人我已经查询成功！今天最低温度%@度，最高温度%@度，%@，%@",dic["qw2"]!,dic["qw1"]!,dic["fl2"]!,dic["fl1"]!)
                     }
                     if (self.resultStr?.contains("明天"))! {
                         if let dic = arr[1] as? [String: String] {
-                            weatherStr = String.init(format: "今天最低温度%@度，最高温度%@度，%@，%@",dic["qw2"]!,dic["qw1"]!,dic["fl2"]!,dic["fl1"]!)
+                            weatherStr = String.init(format: "主人我已经查询成功！明天最低温度%@度，最高温度%@度，%@，%@",dic["qw2"]!,dic["qw1"]!,dic["fl2"]!,dic["fl1"]!)
                         }
                     }
                 }
@@ -171,7 +173,34 @@ class HomeVC: SwifBaseViewController,SFSpeechRecognitionTaskDelegate {
             ProgressHUD.dismissDelay(0)
         }
     }
-    
+    // 获取新闻查询结果的方法
+    func baiduNewsAction() {
+        let url = String.init(format: kBaidu_new_url,self.resultStr!).urlEncode
+        ProgressHUD.showCustomLoadListening(self.view, title: "查询中...")
+        // 这里必须用get请求，因为好多第三方都不是同时支持get和post的
+        _ = JHNetwork.shared.getForJSON(url: url!) { [unowned self] (result, error) in
+            SLog(result)
+            var baiduSearchResultArr: [String] = []
+            if let arr = result?["feed"]["entry"].arrayObject {
+                if arr.count > 0  {
+                    if let dic0 = arr[0] as? [String: Any] {
+                        baiduSearchResultArr.append(dic0["abs"]! as! String)
+                    }
+                    if arr.count > 1, let dic1 = arr[1] as? [String: Any] {
+                        baiduSearchResultArr.append(dic1["abs"]! as! String)
+                    }
+                    if arr.count > 2, let dic2 = arr[2] as? [String: Any] {
+                        baiduSearchResultArr.append(dic2["abs"]! as! String)
+                    }
+                }
+            
+            }
+            if baiduSearchResultArr.count > 0 {
+                SoundPlayer.defaltManager().play(baiduSearchResultArr[0], languageType: LanguageTypeChinese)
+            }
+            ProgressHUD.dismissDelay(0)
+        }
+    }
     
 }
 

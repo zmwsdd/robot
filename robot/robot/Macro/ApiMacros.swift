@@ -34,3 +34,6 @@ let kSRequest_key            =   ""
 let kYYWeatherKey           =   "rw6329j8m8jblmk8"
 /// YY天气-7天的天气预报
 let kYYWeather_url          =   "http://api.yytianqi.com/forecast7d?city=%@&key=rw6329j8m8jblmk8"
+
+/// 百度新闻搜索json数据
+let kBaidu_new_url          =   "http://www.baidu.com/s?wd=%@&pn=0&rn=3&tn=json"
