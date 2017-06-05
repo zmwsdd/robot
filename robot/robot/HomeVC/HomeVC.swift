@@ -21,8 +21,13 @@ class HomeVC: SwifBaseViewController,SFSpeechRecognitionTaskDelegate {
     /// 识别到的结果字符串
     var resultStr: String?
     
+    var textV: UITextView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        // 初始化view
+        self.initAllView()
+        
         // 初始化语音识别方法
         self.initSpeechAction()
         
@@ -50,6 +55,13 @@ class HomeVC: SwifBaseViewController,SFSpeechRecognitionTaskDelegate {
         super.viewWillDisappear(animated)
         // 停止识别
         self.stopListening()
+    }
+    
+    func initAllView() {
+        self.textV = UITextView.init(frame: CGRect.init(x: 0, y: NAVIGATIONBAR_HEIGHT, width: SCREEN_WIDTH, height: SCREEN_HEIGHT - NAVIGATIONBAR_HEIGHT))
+        self.view.addSubview(self.textV)
+        textV.font = FONT_PingFang(fontSize: 17)
+        textV.textColor = UIColor.getMainColorSwift()
     }
     
     // 停止识别
@@ -139,6 +151,8 @@ class HomeVC: SwifBaseViewController,SFSpeechRecognitionTaskDelegate {
                 self.weatherAction()
             } else if self.resultStr != nil {
                 self.baiduNewsAction()
+            } else if (self.resultStr?.contains("重读"))! || (self.resultStr?.contains("重复"))! || (self.resultStr?.contains("再读"))!{
+                SoundPlayer.defaltManager().play(self.resultStr, languageType: LanguageTypeChinese)
             } else {
                 SoundPlayer.defaltManager().play(self.resultStr, languageType: LanguageTypeChinese)
             }
@@ -156,19 +170,50 @@ class HomeVC: SwifBaseViewController,SFSpeechRecognitionTaskDelegate {
             if let arr = result?["data"]["list"].arrayObject {
                 if arr.count == 1 {
                     if let dic = arr[0] as? [String: String] {
-                        weatherStr = String.init(format: "主人我已经查询成功！今天最低温度%@度，最高温度%@度，%@，%@",dic["qw2"]!,dic["qw1"]!,dic["fl2"]!,dic["fl1"]!)
+                        let temperature0 = dic["qw2"] ?? "0"
+                        let temperature1 = dic["qw1"] ?? "0"
+                        let temper = String.init(format: "%@到%@度",temperature0,temperature1)
+                        let rain0 = dic["tq1"] ?? "多云"
+                        let rain1 = dic["tq2"] ?? "晴"
+                        var rain = String.init(format: "%@转%@",rain0,rain1)
+                        if rain0 == rain1 {
+                            rain = String.init(format: "%@",rain0)
+                        }
+                        let wind = dic["fl1"] ?? "微风"
+                        weatherStr = String.init(format: "主人我已经查询成功！今天%@，%@，%@",temper,rain,wind)
                     }
                 } else if arr.count == 2 {
                     if let dic = arr[0] as? [String: String] {
-                        weatherStr = String.init(format: "主人我已经查询成功！今天最低温度%@度，最高温度%@度，%@，%@",dic["qw2"]!,dic["qw1"]!,dic["fl2"]!,dic["fl1"]!)
+                        let temperature0 = dic["qw2"] ?? "0"
+                        let temperature1 = dic["qw1"] ?? "0"
+                        let temper = String.init(format: "%@到%@度",temperature0,temperature1)
+                        let rain0 = dic["tq1"] ?? "多云"
+                        let rain1 = dic["tq2"] ?? "晴"
+                        var rain = String.init(format: "%@转%@",rain0,rain1)
+                        if rain0 == rain1 {
+                            rain = String.init(format: "%@",rain0)
+                        }
+                        let wind = dic["fl1"] ?? "微风"
+                        weatherStr = String.init(format: "主人我已经查询成功！今天%@，%@，%@",temper,rain,wind)
                     }
                     if (self.resultStr?.contains("明天"))! {
                         if let dic = arr[1] as? [String: String] {
-                            weatherStr = String.init(format: "主人我已经查询成功！明天最低温度%@度，最高温度%@度，%@，%@",dic["qw2"]!,dic["qw1"]!,dic["fl2"]!,dic["fl1"]!)
+                            let temperature0 = dic["qw2"] ?? "0"
+                            let temperature1 = dic["qw1"] ?? "0"
+                            let temper = String.init(format: "%@到%@度",temperature0,temperature1)
+                            let rain0 = dic["tq1"] ?? "多云"
+                            let rain1 = dic["tq2"] ?? "晴"
+                            var rain = String.init(format: "%@转%@",rain0,rain1)
+                            if rain0 == rain1 {
+                                rain = String.init(format: "%@",rain0)
+                            }
+                            let wind = dic["fl1"] ?? "微风"
+                            weatherStr = String.init(format: "主人我已经查询成功！明天%@，%@，%@",temper,rain,wind)
                         }
                     }
                 }
             }
+            self.textV.text = weatherStr
             SoundPlayer.defaltManager().play(weatherStr, languageType: LanguageTypeChinese)
             ProgressHUD.dismissDelay(0)
         }
@@ -196,6 +241,7 @@ class HomeVC: SwifBaseViewController,SFSpeechRecognitionTaskDelegate {
             
             }
             if baiduSearchResultArr.count > 0 {
+                self.textV.text = baiduSearchResultArr[0]
                 SoundPlayer.defaltManager().play(baiduSearchResultArr[0], languageType: LanguageTypeChinese)
             }
             ProgressHUD.dismissDelay(0)
