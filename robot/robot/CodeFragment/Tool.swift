@@ -10,6 +10,8 @@ import Foundation
 import UIKit
 import SwiftyJSON
 import AVFoundation
+import MediaPlayer
+import MediaToolbox
 
 /// 网络返回的成功码
 let kSuccessCode = 200
@@ -311,5 +313,53 @@ public class Tool: NSObject {
             try! session.setActive(true)
         }
     }
+    
+    /// 改变系统声音为最大
+    public class func changeVolumeToMax() {
+        let volumeBig = MPVolumeView()
+        var slider: UISlider?
+        for view: UIView in volumeBig.subviews {
+        SLog(view.self.description)
+            SLog(view.className())
+            if view.className() == "MPVolumeSlider" {
+                slider = view as? UISlider
+                break
+            }
+        }
+        let systemVolume = slider?.value ?? 0.5
+        if systemVolume < 0.9 {
+            slider?.setValue(0.9, animated: false)
+            slider?.sendActions(for: .touchUpInside)
+        }
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
 }
