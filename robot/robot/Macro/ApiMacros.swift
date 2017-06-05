@@ -19,21 +19,9 @@ let kSRequest_key            =   ""
 
 
 // 业务逻辑的具体API：
-
-/// YY天气的key  http://api.yytianqi.com/接口名称?city=城市ID&key=用户key
-/// 城市列表json格式获取地址：http://api.yytianqi.com/citylist/id/1
-/*
-    {"city_id":"CH","name":"中国","en":"China","list":[
-        {"city_id":"CH01","name":"北京","en":"","list":[
-        {"city_id":"CH010100","name":"北京","en":"Beijing"}
-        ]},
-        {"city_id":"CH02","name":"上海","en":"","list":[
-        {"city_id":"CH020100","name":"上海","en":"Shanghai"}
-        ]},
-        */
-let kYYWeatherKey           =   "rw6329j8m8jblmk8"
-/// YY天气-7天的天气预报
-let kYYWeather_url          =   "http://api.yytianqi.com/forecast7d?city=%@&key=rw6329j8m8jblmk8"
+/// 阿凡达天气数据的接口
+/// YY天气-7天的天气预报 + 城市名字例如：武汉
+let kYYWeather_url          =   "http://api.avatardata.cn/Weather/Query?key=f06098f5db9f43fbbfe04aba61bb94fb&cityname=%@"
 
 /// 百度新闻搜索json数据
 let kBaidu_new_url          =   "http://www.baidu.com/s?wd=%@&pn=0&rn=3&tn=json"

@@ -165,56 +165,146 @@ class HomeVC: SwifBaseViewController,SFSpeechRecognitionTaskDelegate {
     
     // 获取天气情况的方法
     func weatherAction() {
-    let url = String.init(format: kYYWeather_url,"CH010100")
+    let url = String.init(format: kYYWeather_url,"北京").urlEncode
         ProgressHUD.showCustomLoadListening(self.view, title: "查询中...")
         // 这里必须用get请求，因为好多第三方都不是同时支持get和post的
-        _ = JHNetwork.shared.getForJSON(url: url) { [unowned self] (result, error) in
+        _ = JHNetwork.shared.getForJSON(url: url!) { [unowned self] (result, error) in
            SLog(result)
             var weatherStr = "不好意思获取天气失败"
-            if let arr = result?["data"]["list"].arrayObject {
-                if arr.count == 1 {
-                    if let dic = arr[0] as? [String: String] {
-                        let temperature0 = dic["qw2"] ?? "0"
-                        let temperature1 = dic["qw1"] ?? "0"
-                        let temper = String.init(format: "%@到%@度",temperature0,temperature1)
-                        let rain0 = dic["tq1"] ?? "多云"
-                        let rain1 = dic["tq2"] ?? "晴"
-                        var rain = String.init(format: "%@转%@",rain0,rain1)
-                        if rain0 == rain1 {
-                            rain = String.init(format: "%@",rain0)
-                        }
-                        let wind = dic["fl1"] ?? "微风"
-                        weatherStr = String.init(format: "主人我已经查询成功！今天%@，%@，%@",temper,rain,wind)
+            if let arr = result?["result"]["weather"].arrayObject {
+                if arr.count > 1 {
+                    // 温度
+                    var temp0 = "0" // 默认的最低温度
+                    var temp1 = "0" // 默认的最高温度
+                    if let temp = result?["result"]["weather"][0]["info"]["night"][2].rawString() {
+                        temp0 = temp
                     }
-                } else if arr.count == 2 {
-                    if let dic = arr[0] as? [String: String] {
-                        let temperature0 = dic["qw2"] ?? "0"
-                        let temperature1 = dic["qw1"] ?? "0"
-                        let temper = String.init(format: "%@到%@度",temperature0,temperature1)
-                        let rain0 = dic["tq1"] ?? "多云"
-                        let rain1 = dic["tq2"] ?? "晴"
-                        var rain = String.init(format: "%@转%@",rain0,rain1)
-                        if rain0 == rain1 {
-                            rain = String.init(format: "%@",rain0)
-                        }
-                        let wind = dic["fl1"] ?? "微风"
-                        weatherStr = String.init(format: "主人我已经查询成功！今天%@，%@，%@",temper,rain,wind)
+                    if let temp = result?["result"]["weather"][0]["info"]["day"][2].rawString() {
+                        temp1 = temp
                     }
+                    let temper = String.init(format: "%@到%@度",temp0,temp1)
+                    // 天气多云或者晴天
+                    var rain0 = "多云" // 默认的天气
+                    var rain1 = "晴"  // 默认的天气
+                    if let temp = result?["result"]["weather"][0]["info"]["day"][1].rawString() {
+                        rain0 = temp
+                    }
+                    if let temp = result?["result"]["weather"][0]["info"]["night"][1].rawString() {
+                        rain1 = temp
+                    }
+                    var rain = String.init(format: "%@转%@",rain0,rain1)
+                    if rain0 == rain1 {
+                        rain = String.init(format: "%@",rain0)
+                    }
+                    // 风的情况
+                    var wind0 = "微风" // 默认的天气
+                    var wind1 = "微风"  // 默认的天气
+                    if let temp = result?["result"]["weather"][0]["info"]["day"][4].rawString() {
+                        wind0 = temp
+                        if (temp.contain(ofString: "级")) && !(temp.contain(ofString: "级风")) {
+                            wind0.append("风")
+                        }
+                    }
+                    if let temp = result?["result"]["weather"][0]["info"]["night"][4].rawString() {
+                        wind1 = temp
+                        if (temp.contain(ofString: "级")) && !(temp.contain(ofString: "级风")) {
+                            wind1.append("风")
+                        }
+                    }
+                    var wind = String.init(format: "%@,转,%@",wind0,wind1)
+                    if wind0 == wind1 {
+                        wind = wind0
+                    }
+                    weatherStr = String.init(format: "主人我已经查询成功！今天%@，%@，%@",temper,rain,wind)
                     if (self.resultStr?.contains("明天"))! {
-                        if let dic = arr[1] as? [String: String] {
-                            let temperature0 = dic["qw2"] ?? "0"
-                            let temperature1 = dic["qw1"] ?? "0"
-                            let temper = String.init(format: "%@到%@度",temperature0,temperature1)
-                            let rain0 = dic["tq1"] ?? "多云"
-                            let rain1 = dic["tq2"] ?? "晴"
-                            var rain = String.init(format: "%@转%@",rain0,rain1)
-                            if rain0 == rain1 {
-                                rain = String.init(format: "%@",rain0)
+                        // 温度
+                        var temp0 = "0" // 默认的最低温度
+                        var temp1 = "0" // 默认的最高温度
+                        if let temp = result?["result"]["weather"][1]["info"]["night"][2].rawString() {
+                            temp0 = temp
+                        }
+                        if let temp = result?["result"]["weather"][1]["info"]["day"][2].rawString() {
+                            temp1 = temp
+                        }
+                        let temper = String.init(format: "%@到%@度",temp0,temp1)
+                        // 天气多云或者晴天
+                        var rain0 = "多云" // 默认的天气
+                        var rain1 = "晴"  // 默认的天气
+                        if let temp = result?["result"]["weather"][1]["info"]["day"][1].rawString() {
+                            rain0 = temp
+                        }
+                        if let temp = result?["result"]["weather"][1]["info"]["night"][1].rawString() {
+                            rain1 = temp
+                        }
+                        var rain = String.init(format: "%@转%@",rain0,rain1)
+                        if rain0 == rain1 {
+                            rain = String.init(format: "%@",rain0)
+                        }
+                        // 风的情况
+                        var wind0 = "微风" // 默认的天气
+                        var wind1 = "微风"  // 默认的天气
+                        if let temp = result?["result"]["weather"][1]["info"]["day"][4].rawString() {
+                            wind0 = temp
+                            if (temp.contain(ofString: "级")) && !(temp.contain(ofString: "级风")) {
+                                wind0.append("风")
                             }
-                            let wind = dic["fl1"] ?? "微风"
-                            weatherStr = String.init(format: "主人我已经查询成功！明天%@，%@，%@",temper,rain,wind)
+                        }
+                        if let temp = result?["result"]["weather"][1]["info"]["night"][4].rawString() {
+                            wind1 = temp
+                            if (temp.contain(ofString: "级")) && !(temp.contain(ofString: "级风")) {
+                                wind1.append("风")
+                            }
+                        }
+                        var wind = String.init(format: "%@,转,%@",wind0,wind1)
+                        if wind0 == wind1 {
+                            wind = wind0
+                        }
+                        weatherStr = String.init(format: "主人我已经查询成功！明天%@，%@，%@",temper,rain,wind)
+                    }
+                } else if arr.count > 0 {
+                    // 温度
+                    var temp0 = "0" // 默认的最低温度
+                    var temp1 = "0" // 默认的最高温度
+                    if let temp = result?["result"]["weather"][0]["info"]["night"][2].rawString() {
+                        temp0 = temp
+                    }
+                    if let temp = result?["result"]["weather"][0]["info"]["day"][2].rawString() {
+                        temp1 = temp
+                    }
+                    let temper = String.init(format: "%@到%@度",temp0,temp1)
+                    // 天气多云或者晴天
+                    var rain0 = "多云" // 默认的天气
+                    var rain1 = "晴"  // 默认的天气
+                    if let temp = result?["result"]["weather"][0]["info"]["day"][1].rawString() {
+                        rain0 = temp
+                    }
+                    if let temp = result?["result"]["weather"][0]["info"]["night"][1].rawString() {
+                        rain1 = temp
+                    }
+                    var rain = String.init(format: "%@转%@",rain0,rain1)
+                    if rain0 == rain1 {
+                        rain = String.init(format: "%@",rain0)
+                    }
+                    // 风的情况
+                    var wind0 = "微风" // 默认的天气
+                    var wind1 = "微风"  // 默认的天气
+                    if let temp = result?["result"]["weather"][0]["info"]["day"][4].rawString() {
+                        wind0 = temp
+                        if (temp.contain(ofString: "级")) && !(temp.contain(ofString: "级风")) {
+                            wind0.append("风")
                         }
                     }
+                    if let temp = result?["result"]["weather"][0]["info"]["night"][4].rawString() {
+                        wind1 = temp
+                        if (temp.contain(ofString: "级")) && !(temp.contain(ofString: "级风")) {
+                            wind1.append("风")
+                        }
+                    }
+                    var wind = String.init(format: "%@,转,%@",wind0,wind1)
+                    if wind0 == wind1 {
+                        wind = wind0
+                    }
+                    weatherStr = String.init(format: "主人我已经查询成功！今天%@，%@，%@",temper,rain,wind)
                 }
             }
             self.textV.text = weatherStr
