@@ -12,7 +12,7 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    var tabBarController: XHTabBar!
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 
@@ -29,7 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // tabbar高度最小值49.0, 传nil或<49.0均按49.0处理
         let height = CGFloat(49)
         // tabBarController
-        let tabBarController = XHTabBar(controllerArray:controllerArray,titleArray: titleArray,imageArray: imageArray,selImageArray: selImageArray,height:height)
+        tabBarController = XHTabBar(controllerArray:controllerArray,titleArray: titleArray,imageArray: imageArray,selImageArray: selImageArray,height:height)
         
         window?.rootViewController = tabBarController
         
@@ -84,7 +84,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
         // 发送进入前台的通知
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: kNotificationWillBecomeFront), object: nil)
-        
+        self.tabBarController.showControllerIndex(index: 0)
     }
 
     func applicationWillTerminate(_ application: UIApplication) {

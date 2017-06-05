@@ -86,7 +86,10 @@ class HomeVC: SwifBaseViewController,SFSpeechRecognitionTaskDelegate {
     
     // 开始识别
     func beginListening() {
-        SLog("开始识别。。。")
+        if Tool.isCallFrequent(funcName: "beginListening") {
+            SLog("开始识别。。。")
+            return;
+        }
         ProgressHUD.showCustomLoadListening(self.view, title: "倾听中...")
         Tool.volumeLittle()
         // 麦克风权限检查和开启
