@@ -151,7 +151,7 @@ class HomeVC: SwifBaseViewController,SFSpeechRecognitionTaskDelegate {
             if (self.resultStr?.contains("天气"))! {
                 self.weatherAction()
             } else if (self.resultStr?.contains("重读"))! || (self.resultStr?.contains("重复"))! || (self.resultStr?.contains("再读"))!{
-                SoundPlayer.defaltManager().play(self.resultStr, languageType: LanguageTypeChinese)
+                SoundPlayer.defaltManager().play(self.textV.text, languageType: LanguageTypeChinese)
             } else if self.resultStr != nil {
                 self.baiduNewsAction()
             } else {
