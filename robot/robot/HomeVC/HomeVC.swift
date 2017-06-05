@@ -25,6 +25,7 @@ class HomeVC: SwifBaseViewController,SFSpeechRecognitionTaskDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.addTitle(titleString: NSLocalizedString("机器人", comment: ""))
         // 初始化view
         self.initAllView()
         
@@ -149,10 +150,10 @@ class HomeVC: SwifBaseViewController,SFSpeechRecognitionTaskDelegate {
             SLog("resultStr ==== \(String(describing: self.resultStr!))")
             if (self.resultStr?.contains("天气"))! {
                 self.weatherAction()
-            } else if self.resultStr != nil {
-                self.baiduNewsAction()
             } else if (self.resultStr?.contains("重读"))! || (self.resultStr?.contains("重复"))! || (self.resultStr?.contains("再读"))!{
                 SoundPlayer.defaltManager().play(self.resultStr, languageType: LanguageTypeChinese)
+            } else if self.resultStr != nil {
+                self.baiduNewsAction()
             } else {
                 SoundPlayer.defaltManager().play(self.resultStr, languageType: LanguageTypeChinese)
             }
