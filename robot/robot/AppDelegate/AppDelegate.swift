@@ -46,8 +46,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         //        GDPerformanceMonitor.sharedInstance.startMonitoring()
 
-
+        // 友盟统计
+        self.umengSDK()
+        // buggly 统计
+        Bugly.start(withAppId: kBuggly_id)
+        
         return true
+    }
+    
+    /// - 友盟统计配置
+    func umengSDK() {
+        let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] ?? "1.0.0"
+        MobClick.setAppVersion(version as! String)
+        UMAnalyticsConfig.sharedInstance().appKey = kUmeng_key
+        UMAnalyticsConfig.sharedInstance().channelId = "App Store"
+        MobClick.start(withConfigure: UMAnalyticsConfig.sharedInstance())
     }
 
     func applicationWillResignActive(_ application: UIApplication) {

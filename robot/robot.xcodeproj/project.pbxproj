@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		203BCB68ABC045BBBEB03D52 /* Pods_robot.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F791054CE002CD4446437FDE /* Pods_robot.framework */; };
+		BD1E89891EE542600016C613 /* ThridMacros.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1E89881EE542600016C613 /* ThridMacros.swift */; };
 		BD55F80B1EE162BF0012D454 /* EmptyView.m in Sources */ = {isa = PBXBuildFile; fileRef = BD55F80A1EE162BF0012D454 /* EmptyView.m */; };
 		BD55F8301EE163AD0012D454 /* hud_error@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BD55F80D1EE163AD0012D454 /* hud_error@2x.png */; };
 		BD55F8311EE163AD0012D454 /* hud_error@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BD55F80E1EE163AD0012D454 /* hud_error@3x.png */; };
@@ -78,6 +79,7 @@
 
 /* Begin PBXFileReference section */
 		B0D71FCEC5BE973EB2A2A8AB /* Pods-robot.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-robot.debug.xcconfig"; path = "Pods/Target Support Files/Pods-robot/Pods-robot.debug.xcconfig"; sourceTree = "<group>"; };
+		BD1E89881EE542600016C613 /* ThridMacros.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThridMacros.swift; sourceTree = "<group>"; };
 		BD55F8041EE162020012D454 /* robot-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "robot-Bridging-Header.h"; sourceTree = "<group>"; };
 		BD55F8091EE162BF0012D454 /* EmptyView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmptyView.h; sourceTree = "<group>"; };
 		BD55F80A1EE162BF0012D454 /* EmptyView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmptyView.m; sourceTree = "<group>"; };
@@ -387,6 +389,7 @@
 			isa = PBXGroup;
 			children = (
 				BDDE494F1EE15F650010B96E /* UtilMacros.swift */,
+				BD1E89881EE542600016C613 /* ThridMacros.swift */,
 				BDDE49501EE15F650010B96E /* SizeMacros.swift */,
 				BDDE49511EE15F650010B96E /* SingtonMacros.h */,
 				BDDE49521EE15F650010B96E /* PathMacros.swift */,
@@ -656,6 +659,7 @@
 				BD55F8471EE16AE50012D454 /* UIColor+IOSUtils.m in Sources */,
 				BD55F84B1EE23FFF0012D454 /* SoundPlayer.m in Sources */,
 				BDDE497A1EE15F700010B96E /* Tool.swift in Sources */,
+				BD1E89891EE542600016C613 /* ThridMacros.swift in Sources */,
 				BD55F83C1EE163AD0012D454 /* DLAVAlertViewButtonTheme.m in Sources */,
 				BDDE49931EE15F700010B96E /* UITextView+JCTextView.swift in Sources */,
 				BDDE49991EE1604F0010B96E /* MoreVC.swift in Sources */,
