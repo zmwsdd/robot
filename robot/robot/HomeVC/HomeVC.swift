@@ -9,7 +9,7 @@
 import UIKit
 import Speech
 
-class HomeVC: SwifBaseViewController,SFSpeechRecognitionTaskDelegate {
+class HomeVC: SwifBaseViewController,SFSpeechRecognitionTaskDelegate,CLLocationManagerDelegate {
     /// ios自带的语音识别引擎
     var bufferRec: SFSpeechRecognizer!
     var bufferTask: SFSpeechRecognitionTask?
@@ -23,9 +23,15 @@ class HomeVC: SwifBaseViewController,SFSpeechRecognitionTaskDelegate {
     
     var textV: UITextView!
     
+    /// 获取当然位置
+    var locationManager : CLLocationManager!
+    var currLocation : CLLocation!
+    var currentCity: String! = "北京市"
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.addTitle(titleString: NSLocalizedString("机器人", comment: ""))
+        self.initLocation()
         // 初始化view
         self.initAllView()
         
@@ -56,6 +62,65 @@ class HomeVC: SwifBaseViewController,SFSpeechRecognitionTaskDelegate {
         super.viewWillDisappear(animated)
         // 停止识别
         self.stopListening()
+    }
+    
+    /// 初始化位置信息
+    func initLocation() {
+        if let currentC = UserDefaults.standard.value(forKey: "currentCity") as? String {
+            self.currentCity = currentC
+        }
+        //初始化位置管理器
+        locationManager = CLLocationManager()
+        locationManager.delegate = self
+        //设备使用电池供电时最高的精度
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        //精确到1000米,距离过滤器，定义了设备移动后获得位置信息的最小距离
+        locationManager.distanceFilter = kCLLocationAccuracyKilometer
+        //如果是IOS8及以上版本需调用这个方法
+        locationManager.requestAlwaysAuthorization()
+        //使用应用程序期间允许访问位置数据
+        locationManager.requestWhenInUseAuthorization();
+        //启动定位
+        locationManager.startUpdatingLocation()
+    }
+    
+    //FIXME: CoreLocationManagerDelegate 中获取到位置信息的处理函数
+    func  locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        let location:CLLocation = locations[locations.count-1] as CLLocation
+        currLocation=location
+        if (location.horizontalAccuracy > 0) {
+            self.locationManager.stopUpdatingLocation()
+            print("wgs84坐标系  纬度: \(location.coordinate.latitude) 经度: \(location.coordinate.longitude)")
+            self.locationManager.stopUpdatingLocation()
+            print("结束定位")
+        }
+        //使用坐标，获取地址
+        let geocoder = CLGeocoder()
+        var p:CLPlacemark?
+        geocoder.reverseGeocodeLocation(currLocation, completionHandler: { [unowned self] (placemarks, error) -> Void in
+            if error != nil {
+                print("获取地址失败: \(error!.localizedDescription)")
+                return
+            }
+            let pm = placemarks! as [CLPlacemark]
+            if (pm.count > 0){
+                p = placemarks![0] as CLPlacemark
+                print("地址:\(String(describing: p?.locality!))")
+                if let city = p?.locality {
+                    self.currentCity = city // 北京市
+                    if !String.isEmptyString(str: self.currentCity) {
+                        UserDefaults.standard.setValue(self.currentCity, forKey: "currentCity")
+                        UserDefaults.standard.synchronize()
+                    }
+                }
+            }else{
+                print("没地址!")
+            }
+        })
+    }
+    //FIXME:  获取位置信息失败
+    func  locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print(error)
     }
     
     func initAllView() {
@@ -165,7 +230,8 @@ class HomeVC: SwifBaseViewController,SFSpeechRecognitionTaskDelegate {
     
     // 获取天气情况的方法
     func weatherAction() {
-    let url = String.init(format: kYYWeather_url,"北京").urlEncode
+    SLog("当前城市是：\(self.currentCity)")
+    let url = String.init(format: kYYWeather_url,self.currentCity).urlEncode
         ProgressHUD.showCustomLoadListening(self.view, title: "查询中...")
         // 这里必须用get请求，因为好多第三方都不是同时支持get和post的
         _ = JHNetwork.shared.getForJSON(url: url!) { [unowned self] (result, error) in
