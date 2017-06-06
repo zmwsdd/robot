@@ -221,9 +221,7 @@ class HomeVC: SwifBaseViewController,SFSpeechRecognitionTaskDelegate,CLLocationM
             } else if (self.resultStr?.contains("重读"))! || (self.resultStr?.contains("重复"))! || (self.resultStr?.contains("再读"))!{
                 SoundPlayer.defaltManager().play(self.textV.text, languageType: LanguageTypeChinese)
             } else if (self.resultStr?.contains("退下"))! || (self.resultStr?.contains("结束吧"))! || (self.resultStr?.contains("退出"))!{
-                let arr = [1,2,3]
-                let str = arr[1000] // 故意让程序崩溃，达到退出应用的目的
-                print(str)
+                Tool.exitApplication() // 退出APP
             } else if self.resultStr != nil {
                 self.baiduNewsAction()
             } else {

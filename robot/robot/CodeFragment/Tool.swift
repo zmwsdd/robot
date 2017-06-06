@@ -333,33 +333,16 @@ public class Tool: NSObject {
         }
     }
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    /// 退出APP
+    public class func exitApplication() {
+        let appDelegate = UIApplication.shared.delegate!
+        let window = appDelegate.window!
+        UIView.animate(withDuration: 0.8, animations: {
+            window?.alpha = 0.0
+            window?.frame = CGRect.init(x: 0, y: (window?.bounds.size.height)!, width: SCREEN_WIDTH, height: 0)
+        }) { (finish) in
+            exit(0)
+        }
+    }
+
 }
