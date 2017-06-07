@@ -29,8 +29,11 @@ class HomeVC: SwifBaseViewController,SFSpeechRecognitionTaskDelegate,CLLocationM
     var currLocation : CLLocation!
     var currentCity: String! = "北京市"
     
+    var canStarSpeechFlag: Bool = true // 当离开当前页面或者正在播放语音的时候都是NO
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        canStarSpeechFlag = true
         self.addTitle(titleString: NSLocalizedString("机器人", comment: ""))
         self.initLocation()
         // 初始化view
@@ -55,12 +58,14 @@ class HomeVC: SwifBaseViewController,SFSpeechRecognitionTaskDelegate,CLLocationM
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        canStarSpeechFlag = true
         // 开始识别
         self.beginListening()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        canStarSpeechFlag = false
         // 停止识别
         self.stopListening()
     }
@@ -140,8 +145,9 @@ class HomeVC: SwifBaseViewController,SFSpeechRecognitionTaskDelegate,CLLocationM
     // 停止识别
     func stopListening() {
         SLog("停止识别")
+        canStarSpeechFlag = false
         SoundPlayer.defaltManager().stopAction()
-        ProgressHUD.dismissDelay(0)
+        self.addTitle(titleString: "机器人")
         self.bufferEngine.stop()
         self.bufferInputNode.removeTap(onBus: 0)
         self.bufferTask = nil
@@ -159,12 +165,13 @@ class HomeVC: SwifBaseViewController,SFSpeechRecognitionTaskDelegate,CLLocationM
     
     // 开始识别
     func beginListening() {
+        canStarSpeechFlag = true
         SoundPlayer.defaltManager().stopAction()
         if Tool.isCallFrequent(funcName: "beginListening") {
             SLog("开始识别。。。")
             return;
         }
-        ProgressHUD.showCustomLoadListening(self.view, title: "倾听中...")
+        self.addTitle(titleString: "倾听中...")
         Tool.volumeLittle()
         // 麦克风权限检查和开启
         let avSession = AVAudioSession.sharedInstance()
@@ -195,7 +202,7 @@ class HomeVC: SwifBaseViewController,SFSpeechRecognitionTaskDelegate,CLLocationM
                         let alertVC = UIAlertController.initAlertC(title: "请进入设置->隐私->麦克风->开启授权", msg: nil, style: .alert)
                         alertVC.addMyAction(title: "确定", style: .default)
                         alertVC.showAlertC(vc: self, completion: nil)
-                        ProgressHUD.dismissDelay(0)
+                        self.addTitle(titleString: "机器人")
                     }
                 }
             })
@@ -225,29 +232,48 @@ class HomeVC: SwifBaseViewController,SFSpeechRecognitionTaskDelegate,CLLocationM
         self.myTimer = Timer.scheduledTimer(withTimeInterval: 1.0, block: { [unowned self] (timer) in
             self.resultStr = transcription.formattedString
             SLog(self.resultStr)
-//            DispatchQueue.main.async {
-//                self.textV.text = self.resultStr
-//            }
             SLog("resultStr ==== \(String(describing: self.resultStr!))")
             if (self.resultStr?.contains("天气"))! {
                 self.weatherAction()
             } else if (self.resultStr?.contains("重读"))! || (self.resultStr?.contains("重复"))! || (self.resultStr?.contains("再读"))!{
+                self.canStarSpeechFlag = false
                 SoundPlayer.defaltManager().play(self.textV.text, languageType: LanguageTypeChinese)
+                
             } else if (self.resultStr?.contains("退下"))! || (self.resultStr?.contains("结束吧"))! || (self.resultStr?.contains("退出"))!{
                 Tool.exitApplication() // 退出APP
             } else if self.resultStr != nil {
                 self.sougouSearchAction()
             } else {
+                self.canStarSpeechFlag = false
                 SoundPlayer.defaltManager().play(self.resultStr, languageType: LanguageTypeChinese)
             }
         }, repeats: false)
     }
     
+    func speechRecognitionTaskWasCancelled(_ task: SFSpeechRecognitionTask) {
+        if self.canStarSpeechFlag {
+            SLog("长时间不说话，重启识别")
+            DispatchQueue.main.async {
+                self.beginListening()
+            }
+        }
+    }
+    /// 长识别不说话会进入这个代理方法，以后就不能识别了。所以需要在这里开启识别
+    func speechRecognitionTask(_ task: SFSpeechRecognitionTask, didFinishSuccessfully successfully: Bool) {
+        if self.canStarSpeechFlag {
+            SLog("长时间不说话，重启识别")
+            DispatchQueue.main.async {
+                self.beginListening()
+            }
+        }
+    }
+    
     // 获取天气情况的方法
     func weatherAction() {
     SLog("当前城市是：\(self.currentCity)")
+    askTitleV.text = self.resultStr
     let url = String.init(format: kYYWeather_url,self.currentCity).urlEncode
-        ProgressHUD.showCustomLoadListening(self.view, title: "查询中...")
+        self.addTitle(titleString: "查询中...")
         // 这里必须用get请求，因为好多第三方都不是同时支持get和post的
         _ = JHNetwork.shared.getForJSON(url: url!) { [unowned self] (result, error) in
            SLog(result)
@@ -389,14 +415,16 @@ class HomeVC: SwifBaseViewController,SFSpeechRecognitionTaskDelegate,CLLocationM
                 }
             }
             self.textV.text = weatherStr
+            self.canStarSpeechFlag = false
             SoundPlayer.defaltManager().play(weatherStr, languageType: LanguageTypeChinese)
-            ProgressHUD.dismissDelay(0)
+            self.addTitle(titleString: "机器人")
         }
     }
     // 获取新闻查询结果的方法
     func baiduNewsAction() {
         let url = String.init(format: kBaidu_new_url,self.resultStr!).urlEncode
-        ProgressHUD.showCustomLoadListening(self.view, title: "查询中...")
+        self.addTitle(titleString: "查询中...")
+        askTitleV.text = self.resultStr
         // 这里必须用get请求，因为好多第三方都不是同时支持get和post的
         _ = JHNetwork.shared.getForJSON(url: url!) { [unowned self] (result, error) in
             SLog(result)
@@ -413,18 +441,18 @@ class HomeVC: SwifBaseViewController,SFSpeechRecognitionTaskDelegate,CLLocationM
                         baiduSearchResultArr.append(dic2["abs"]! as! String)
                     }
                 }
-            
             }
             if baiduSearchResultArr.count > 0 {
                 self.textV.text = baiduSearchResultArr[0]
+                self.canStarSpeechFlag = false
                 SoundPlayer.defaltManager().play(baiduSearchResultArr[0], languageType: LanguageTypeChinese)
             }
-            ProgressHUD.dismissDelay(0)
+            self.addTitle(titleString: "机器人")
         }
     }
     // 搜狗搜索
     func sougouSearchAction() {
-        ProgressHUD.showCustomLoadListening(self.view, title: "查询中...")
+        self.addTitle(titleString: "查询中...")
         let session = URLSession.shared
         let urlStr = String.init(format: "http://wenwen.sogou.com/s/?w=%@&pg=0",self.resultStr!).urlEncode
         askTitleV.text = self.resultStr
@@ -442,8 +470,9 @@ class HomeVC: SwifBaseViewController,SFSpeechRecognitionTaskDelegate,CLLocationM
                     } else {
                         self.textV.text = String.init(format: "答案一：%@\n\n答案二：%@",lastStr1,lastStr2)
                     }
+                    self.canStarSpeechFlag = false
                     SoundPlayer.defaltManager().play(self.textV.text, languageType: LanguageTypeChinese)
-                    ProgressHUD.dismissDelay(0)
+                    self.addTitle(titleString: "机器人")
                 }
             }
             }.resume()
