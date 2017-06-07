@@ -26,6 +26,49 @@ extension String {
         }
         return false
     }
+    /// 移除两个字符串之间的字符串后的结果
+    public func removeAllSubString(beginStr: String, endStr: String) -> String {
+        SLog(self)
+        var last = String.init(format: "%@",self)
+        for _ in 0...self.components(separatedBy: beginStr).count + 1 {
+            if last.contain(ofString: beginStr) && last.contain(ofString: endStr) {
+                let tempStr: NSString = NSString.init(string: last)
+                let starRange = tempStr.range(of: beginStr)
+                let endRange = tempStr.range(of: endStr)
+                let range: NSRange! = NSMakeRange(starRange.location, endRange.location - starRange.location + 1)
+                let lastStr: String? = tempStr.substring(with: range)
+                last = tempStr.replacingOccurrences(of: lastStr ?? "", with: "")
+            } else {
+                last = self
+            }
+        }
+        return last
+    }
+    /// 移除前两个两个字符串之间的字符串后的结果
+    public func removeFirstSubString(beginStr: String, endStr: String) -> String {
+        var last = String.init(format: "%@",self)
+        if last.contain(ofString: beginStr) && last.contain(ofString: endStr) {
+            let tempStr: NSString = NSString.init(string: last)
+            let starRange = tempStr.range(of: beginStr)
+            let endRange = tempStr.range(of: endStr)
+            let range: NSRange! = NSMakeRange(starRange.location, endRange.location - starRange.location + 1)
+            let lastStr: String? = tempStr.substring(with: range)
+            last = tempStr.replacingOccurrences(of: lastStr ?? "", with: "")
+        } else {
+            last = self
+        }
+        return last
+    }
+    
+    /// 获取两个字符串直接的字符串
+    public func getSubStr(beginStr: String, endStr: String) -> String {
+        let tempStr: NSString = NSString.init(string: self)
+        let starRange = tempStr.range(of: beginStr)
+        let endRange = tempStr.range(of: endStr)
+        let range: NSRange! = NSMakeRange(starRange.location + starRange.length, endRange.location - starRange.location - starRange.length)
+        let lastStr: String? = tempStr.substring(with: range)
+        return lastStr ?? self
+    }
     
     public var length: Int {
         get {

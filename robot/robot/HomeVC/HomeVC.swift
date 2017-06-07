@@ -21,6 +21,7 @@ class HomeVC: SwifBaseViewController,SFSpeechRecognitionTaskDelegate,CLLocationM
     /// 识别到的结果字符串
     var resultStr: String?
     
+    var askTitleV: UITextView!
     var textV: UITextView!
     
     /// 获取当然位置
@@ -124,7 +125,13 @@ class HomeVC: SwifBaseViewController,SFSpeechRecognitionTaskDelegate,CLLocationM
     }
     
     func initAllView() {
-        self.textV = UITextView.init(frame: CGRect.init(x: 0, y: NAVIGATIONBAR_HEIGHT, width: SCREEN_WIDTH, height: SCREEN_HEIGHT - NAVIGATIONBAR_HEIGHT))
+        askTitleV = UITextView.init(frame: CGRect.init(x: 0, y: NAVIGATIONBAR_HEIGHT, width: SCREEN_WIDTH, height: 80))
+        view.addSubview(askTitleV)
+        askTitleV.font = FONT_PingFang(fontSize: 17)
+        askTitleV.textColor = UIColor.getMainColorSwift()
+        askTitleV.textAlignment = .center
+        
+        self.textV = UITextView.init(frame: CGRect.init(x: 0, y: NAVIGATIONBAR_HEIGHT + 100, width: SCREEN_WIDTH, height: SCREEN_HEIGHT - NAVIGATIONBAR_HEIGHT - 100))
         self.view.addSubview(self.textV)
         textV.font = FONT_PingFang(fontSize: 17)
         textV.textColor = UIColor.getMainColorSwift()
@@ -133,6 +140,7 @@ class HomeVC: SwifBaseViewController,SFSpeechRecognitionTaskDelegate,CLLocationM
     // 停止识别
     func stopListening() {
         SLog("停止识别")
+        SoundPlayer.defaltManager().stopAction()
         ProgressHUD.dismissDelay(0)
         self.bufferEngine.stop()
         self.bufferInputNode.removeTap(onBus: 0)
@@ -151,6 +159,7 @@ class HomeVC: SwifBaseViewController,SFSpeechRecognitionTaskDelegate,CLLocationM
     
     // 开始识别
     func beginListening() {
+        SoundPlayer.defaltManager().stopAction()
         if Tool.isCallFrequent(funcName: "beginListening") {
             SLog("开始识别。。。")
             return;
@@ -418,54 +427,26 @@ class HomeVC: SwifBaseViewController,SFSpeechRecognitionTaskDelegate,CLLocationM
         ProgressHUD.showCustomLoadListening(self.view, title: "查询中...")
         let session = URLSession.shared
         let urlStr = String.init(format: "http://wenwen.sogou.com/s/?w=%@&pg=0",self.resultStr!).urlEncode
+        askTitleV.text = self.resultStr
         session.dataTask(with: URL.init(string: urlStr!)!) { [unowned self] (data, urlResponse, error) in
             if let result = data {
-                let str: String! = String.init(data: result, encoding: String.Encoding.utf8) ?? "暂五数据"
-                let tempStr: NSString = NSString.init(string: str)
-                let starRange = tempStr.range(of: "<div class=\"result-summary\">")
-                let endRange = tempStr.range(of: "</div><div class=\"result-info sIt_info\">")
-                let range: NSRange! = NSMakeRange(starRange.location + starRange.length, endRange.location - starRange.location - starRange.length)
-                let lastStr: String? = tempStr.substring(with: range)
-                SLog(lastStr)
-                let secondStr = self.getAnswer2(originStr: str)
+                let totalResultStr: String! = String.init(data: result, encoding: String.Encoding.utf8) ?? "暂五数据"
+                let firstStr: String = totalResultStr.getSubStr(beginStr: "<div class=\"result-summary\">", endStr: "</div><div class=\"result-info sIt_info\">")
+                let secondTemp = totalResultStr.removeFirstSubString(beginStr: "<div class=\"result-summary\">", endStr: "</div><div class=\"result-info sIt_info\">")
+                let secondStr = secondTemp.getSubStr(beginStr: "<div class=\"result-summary\">", endStr: "</div><div class=\"result-info sIt_info\">")
+                let lastStr1 = firstStr.removeAllSubString(beginStr: "<", endStr: ">")
+                let lastStr2 = secondStr.removeAllSubString(beginStr: "<", endStr: ">")
                 DispatchQueue.main.async {
                     if String.isEmptyString(str: secondStr) {
-                        self.textV.text = String.init(format: "%@",self.removeSubString(str: lastStr!, beginStr: "<", endStr: ">"))
+                        self.textV.text = String.init(format: "%@",lastStr1)
                     } else {
-                        self.textV.text = String.init(format: "答案一：%@\n\n答案二：%@",self.removeSubString(str: lastStr!, beginStr: "<", endStr: ">"),secondStr)
+                        self.textV.text = String.init(format: "答案一：%@\n\n答案二：%@",lastStr1,lastStr2)
                     }
                     SoundPlayer.defaltManager().play(self.textV.text, languageType: LanguageTypeChinese)
                     ProgressHUD.dismissDelay(0)
                 }
             }
             }.resume()
-    }
-    
-    func getAnswer2(originStr: String) -> String {
-        let secondStr: String = self.removeSubString(str: originStr, beginStr: "<div class=\"result-summary\">", endStr: "</div><div class=\"result-info sIt_info\">")
-        let tempStr: NSString = NSString.init(string: secondStr)
-        let starRange = tempStr.range(of: "<div class=\"result-summary\">")
-        let endRange = tempStr.range(of: "</div><div class=\"result-info sIt_info\">")
-        let range: NSRange! = NSMakeRange(starRange.location + starRange.length, endRange.location - starRange.location - starRange.length)
-        let lastStr: String? = tempStr.substring(with: range)
-        return self.removeSubString(str: lastStr ?? "", beginStr: "<", endStr: ">")
-    }
-    
-    func removeSubString(str: String, beginStr: String, endStr: String) -> String {
-        var last = str
-        for _ in 0...str.components(separatedBy: beginStr).count + 1 {
-            if last.contain(ofString: beginStr) && last.contain(ofString: endStr) {
-                let tempStr: NSString = NSString.init(string: last)
-                let starRange = tempStr.range(of: beginStr)
-                let endRange = tempStr.range(of: endStr)
-                let range: NSRange! = NSMakeRange(starRange.location, endRange.location - starRange.location + 1)
-                let lastStr: String? = tempStr.substring(with: range)
-                last = tempStr.replacingOccurrences(of: lastStr ?? "", with: "")
-            } else {
-                last = str
-            }
-        }
-        return last
     }
     
 }
