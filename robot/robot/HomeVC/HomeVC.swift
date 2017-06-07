@@ -427,13 +427,28 @@ class HomeVC: SwifBaseViewController,SFSpeechRecognitionTaskDelegate,CLLocationM
                 let range: NSRange! = NSMakeRange(starRange.location + starRange.length, endRange.location - starRange.location - starRange.length)
                 let lastStr: String? = tempStr.substring(with: range)
                 SLog(lastStr)
+                let secondStr = self.getAnswer2(originStr: str)
                 DispatchQueue.main.async {
-                    self.textV.text = self.removeSubString(str: lastStr!, beginStr: "<", endStr: ">")
+                    if String.isEmptyString(str: secondStr) {
+                        self.textV.text = String.init(format: "%@",self.removeSubString(str: lastStr!, beginStr: "<", endStr: ">"))
+                    } else {
+                        self.textV.text = String.init(format: "答案一：%@\n\n答案二：%@",self.removeSubString(str: lastStr!, beginStr: "<", endStr: ">"),secondStr)
+                    }
                     SoundPlayer.defaltManager().play(self.textV.text, languageType: LanguageTypeChinese)
                     ProgressHUD.dismissDelay(0)
                 }
             }
             }.resume()
+    }
+    
+    func getAnswer2(originStr: String) -> String {
+        let secondStr: String = self.removeSubString(str: originStr, beginStr: "<div class=\"result-summary\">", endStr: "</div><div class=\"result-info sIt_info\">")
+        let tempStr: NSString = NSString.init(string: secondStr)
+        let starRange = tempStr.range(of: "<div class=\"result-summary\">")
+        let endRange = tempStr.range(of: "</div><div class=\"result-info sIt_info\">")
+        let range: NSRange! = NSMakeRange(starRange.location + starRange.length, endRange.location - starRange.location - starRange.length)
+        let lastStr: String? = tempStr.substring(with: range)
+        return self.removeSubString(str: lastStr ?? "", beginStr: "<", endStr: ">")
     }
     
     func removeSubString(str: String, beginStr: String, endStr: String) -> String {
