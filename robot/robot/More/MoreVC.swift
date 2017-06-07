@@ -9,5 +9,15 @@
 import UIKit
 
 class MoreVC: SwifBaseViewController {
-
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.addTitle(titleString: "我的")
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+    }
+    
+    
 }

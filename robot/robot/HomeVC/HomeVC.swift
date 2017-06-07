@@ -215,6 +215,10 @@ class HomeVC: SwifBaseViewController,SFSpeechRecognitionTaskDelegate,CLLocationM
         self.myTimer = nil
         self.myTimer = Timer.scheduledTimer(withTimeInterval: 1.0, block: { [unowned self] (timer) in
             self.resultStr = transcription.formattedString
+            SLog(self.resultStr)
+//            DispatchQueue.main.async {
+//                self.textV.text = self.resultStr
+//            }
             SLog("resultStr ==== \(String(describing: self.resultStr!))")
             if (self.resultStr?.contains("天气"))! {
                 self.weatherAction()
@@ -223,7 +227,7 @@ class HomeVC: SwifBaseViewController,SFSpeechRecognitionTaskDelegate,CLLocationM
             } else if (self.resultStr?.contains("退下"))! || (self.resultStr?.contains("结束吧"))! || (self.resultStr?.contains("退出"))!{
                 Tool.exitApplication() // 退出APP
             } else if self.resultStr != nil {
-                self.baiduNewsAction()
+                self.sougouSearchAction()
             } else {
                 SoundPlayer.defaltManager().play(self.resultStr, languageType: LanguageTypeChinese)
             }
@@ -408,6 +412,45 @@ class HomeVC: SwifBaseViewController,SFSpeechRecognitionTaskDelegate,CLLocationM
             }
             ProgressHUD.dismissDelay(0)
         }
+    }
+    // 搜狗搜索
+    func sougouSearchAction() {
+        ProgressHUD.showCustomLoadListening(self.view, title: "查询中...")
+        let session = URLSession.shared
+        let urlStr = String.init(format: "http://wenwen.sogou.com/s/?w=%@&pg=0",self.resultStr!).urlEncode
+        session.dataTask(with: URL.init(string: urlStr!)!) { [unowned self] (data, urlResponse, error) in
+            if let result = data {
+                let str: String! = String.init(data: result, encoding: String.Encoding.utf8) ?? "暂五数据"
+                let tempStr: NSString = NSString.init(string: str)
+                let starRange = tempStr.range(of: "<div class=\"result-summary\">")
+                let endRange = tempStr.range(of: "</div><div class=\"result-info sIt_info\">")
+                let range: NSRange! = NSMakeRange(starRange.location + starRange.length, endRange.location - starRange.location - starRange.length)
+                let lastStr: String? = tempStr.substring(with: range)
+                SLog(lastStr)
+                DispatchQueue.main.async {
+                    self.textV.text = self.removeSubString(str: lastStr!, beginStr: "<", endStr: ">")
+                    SoundPlayer.defaltManager().play(self.textV.text, languageType: LanguageTypeChinese)
+                    ProgressHUD.dismissDelay(0)
+                }
+            }
+            }.resume()
+    }
+    
+    func removeSubString(str: String, beginStr: String, endStr: String) -> String {
+        var last = str
+        for _ in 0...str.components(separatedBy: beginStr).count + 1 {
+            if last.contain(ofString: beginStr) && last.contain(ofString: endStr) {
+                let tempStr: NSString = NSString.init(string: last)
+                let starRange = tempStr.range(of: beginStr)
+                let endRange = tempStr.range(of: endStr)
+                let range: NSRange! = NSMakeRange(starRange.location, endRange.location - starRange.location + 1)
+                let lastStr: String? = tempStr.substring(with: range)
+                last = tempStr.replacingOccurrences(of: lastStr ?? "", with: "")
+            } else {
+                last = str
+            }
+        }
+        return last
     }
     
 }
