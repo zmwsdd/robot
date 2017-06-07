@@ -9,7 +9,7 @@
 import UIKit
 import Speech
 
-class HomeVC: SwifBaseViewController,SFSpeechRecognitionTaskDelegate,CLLocationManagerDelegate {
+class HomeVC: SwifBaseViewController,SFSpeechRecognitionTaskDelegate,CLLocationManagerDelegate,UITextViewDelegate {
     /// ios自带的语音识别引擎
     var bufferRec: SFSpeechRecognizer!
     var bufferTask: SFSpeechRecognitionTask?
@@ -135,16 +135,44 @@ class HomeVC: SwifBaseViewController,SFSpeechRecognitionTaskDelegate,CLLocationM
         askTitleV.font = FONT_PingFang(fontSize: 17)
         askTitleV.textColor = UIColor.getMainColorSwift()
         askTitleV.textAlignment = .center
+        askTitleV.delegate = self
         
         self.textV = UITextView.init(frame: CGRect.init(x: 0, y: NAVIGATIONBAR_HEIGHT + 100, width: SCREEN_WIDTH, height: SCREEN_HEIGHT - NAVIGATIONBAR_HEIGHT - 100))
         self.view.addSubview(self.textV)
         textV.font = FONT_PingFang(fontSize: 17)
         textV.textColor = UIColor.getMainColorSwift()
+        textV.isUserInteractionEnabled = false
+    }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        self.resultStr = textView.text ?? ""
+        if String.isEmptyString(str: resultStr) {
+            return
+        }
+        self.stopListening()
+        if (self.resultStr?.contains("天气"))! {
+            SoundPlayer.defaltManager().stopAction()
+            self.weatherAction()
+        } else if (self.resultStr?.contains("重读"))! || (self.resultStr?.contains("重复"))! || (self.resultStr?.contains("再读"))!{
+            SoundPlayer.defaltManager().stopAction()
+            self.canStarSpeechFlag = false
+            SoundPlayer.defaltManager().play(self.textV.text, languageType: LanguageTypeChinese)
+        } else if (self.resultStr?.contains("退下"))! || (self.resultStr?.contains("结束吧"))! || (self.resultStr?.contains("退出"))!{
+            Tool.exitApplication() // 退出APP
+        } else if self.resultStr != nil {
+            SoundPlayer.defaltManager().stopAction()
+            self.sougouSearchAction()
+        } else {
+            self.canStarSpeechFlag = false
+            SoundPlayer.defaltManager().stopAction()
+            SoundPlayer.defaltManager().play(self.resultStr, languageType: LanguageTypeChinese)
+        }
     }
     
     // 停止识别
     func stopListening() {
         SLog("停止识别")
+        askTitleV.resignFirstResponder()
         canStarSpeechFlag = false
         SoundPlayer.defaltManager().stopAction()
         self.addTitle(titleString: "机器人")
