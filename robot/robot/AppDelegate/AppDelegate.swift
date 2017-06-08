@@ -21,7 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // 控制器名字数组
         let  controllerArray = ["HomeVC","MoreVC"]
         // 标题数组
-        let  titleArray = ["机器人","我的"]
+        let  titleArray = ["机器人","说明书"]
         // icon 未选中的数组
         let  imageArray = ["tabbar_home","tabbar_more"]
         // icon 选中的数组

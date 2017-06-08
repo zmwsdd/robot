@@ -63,14 +63,16 @@ class HomeVC: SwifBaseViewController,SFSpeechRecognitionTaskDelegate,CLLocationM
         // 开始识别
         self.beginListening()
         self.navigationItem.rightBarButtonItems = nil
-        self.rightButton(name: "百度一下", image: nil) { [unowned self] (btn) in
+        self.rightButton(name: "网页搜索", image: nil) { [unowned self] (btn) in
             let vc = WKWebViewVC()
             var str = self.askTitleV.text
             if String.isEmptyString(str: self.askTitleV.text) {
                 str = self.resultStr ?? ""
             }
             vc.hidesBottomBarWhenPushed = true
-            vc.urlStr = String.init(format: "https://www.baidu.com/s?wd=%@",str!)
+//            vc.urlStr = String.init(format: "https://www.baidu.com/s?wd=%@",str!).urlEncode  /// 二级页面不能重新加载（拿不到回调）
+            vc.urlStr = String.init(format: "https://www.sogou.com/web?query=%@",str!).urlEncode
+
             self.navigationController?.pushViewController(vc, animated: true)
         }
     }

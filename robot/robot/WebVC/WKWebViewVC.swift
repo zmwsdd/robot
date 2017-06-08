@@ -50,6 +50,7 @@ class WKWebViewVC: SwifBaseViewController,WKNavigationDelegate {
         webView.addProgressView()
         // 监听title （其实进度和title都是用监听获取的）
         webView.addObserver(self, forKeyPath: "title", options: .new, context: nil)
+        webView.addObserver(self, forKeyPath: "estimatedProgress", options: .new, context: nil)
     }
     
     // 监听title的回调
@@ -58,11 +59,37 @@ class WKWebViewVC: SwifBaseViewController,WKNavigationDelegate {
             if !String.isEmptyString(str: self.webView.title) && String.isEmptyString(str: self.titleStr) {
                 self.addTitle(titleString: self.webView.title!)
             }
+        } else if (keyPath == "estimatedProgress" && webView.estimatedProgress == 1.0) {
+            SLog("keyPath====\(String(describing: keyPath))----\(webView.estimatedProgress)")
+            let jsToGetHTMLSource = "document.body.innerText";
+            webView.evaluateJavaScript(jsToGetHTMLSource) { [unowned self] (result, error) in
+                DispatchQueue.main.async {
+                    if !String.isEmptyString(str: result.debugDescription) {
+                        self.navigationItem.rightBarButtonItems = nil
+                        SoundPlayer.defaltManager().stopAction()
+                        self.rightButton(name: "播放语音", image: nil) { (btn) in
+                            if btn?.titleLabel?.text == "停止播放" {
+                                btn?.setTitle("播放语音", for: .normal)
+                                SoundPlayer.defaltManager().stopAction()
+                            } else {
+                                btn?.setTitle("停止播放", for: .normal)
+                                SoundPlayer.defaltManager().play(result.debugDescription, languageType: LanguageTypeChinese)
+                            }
+                        }
+                    }
+                }
+            }
         }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        SoundPlayer.defaltManager().stopAction()
     }
     
     deinit {
         webView.removeObserver(self, forKeyPath: "title")
+        webView.removeObserver(self, forKeyPath: "estimatedProgress")
     }
 
     // 加载页面

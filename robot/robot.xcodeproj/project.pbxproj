@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		203BCB68ABC045BBBEB03D52 /* Pods_robot.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F791054CE002CD4446437FDE /* Pods_robot.framework */; };
 		BD1E89891EE542600016C613 /* ThridMacros.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1E89881EE542600016C613 /* ThridMacros.swift */; };
+		BD25FEC81EE92D9400C14D67 /* MoreCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD25FEC71EE92D9400C14D67 /* MoreCell.swift */; };
 		BD55F80B1EE162BF0012D454 /* EmptyView.m in Sources */ = {isa = PBXBuildFile; fileRef = BD55F80A1EE162BF0012D454 /* EmptyView.m */; };
 		BD55F8301EE163AD0012D454 /* hud_error@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BD55F80D1EE163AD0012D454 /* hud_error@2x.png */; };
 		BD55F8311EE163AD0012D454 /* hud_error@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BD55F80E1EE163AD0012D454 /* hud_error@3x.png */; };
@@ -82,6 +83,7 @@
 /* Begin PBXFileReference section */
 		B0D71FCEC5BE973EB2A2A8AB /* Pods-robot.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-robot.debug.xcconfig"; path = "Pods/Target Support Files/Pods-robot/Pods-robot.debug.xcconfig"; sourceTree = "<group>"; };
 		BD1E89881EE542600016C613 /* ThridMacros.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThridMacros.swift; sourceTree = "<group>"; };
+		BD25FEC71EE92D9400C14D67 /* MoreCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoreCell.swift; sourceTree = "<group>"; };
 		BD55F8041EE162020012D454 /* robot-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "robot-Bridging-Header.h"; sourceTree = "<group>"; };
 		BD55F8091EE162BF0012D454 /* EmptyView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmptyView.h; sourceTree = "<group>"; };
 		BD55F80A1EE162BF0012D454 /* EmptyView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmptyView.m; sourceTree = "<group>"; };
@@ -395,6 +397,7 @@
 			isa = PBXGroup;
 			children = (
 				BDDE49981EE1604F0010B96E /* MoreVC.swift */,
+				BD25FEC71EE92D9400C14D67 /* MoreCell.swift */,
 			);
 			path = More;
 			sourceTree = "<group>";
@@ -668,6 +671,7 @@
 				BD55F8371EE163AD0012D454 /* FLFMDBQueueManager.m in Sources */,
 				BDDE49811EE15F700010B96E /* DispatchQueue+IOSUtil.swift in Sources */,
 				BDDE498C1EE15F700010B96E /* UIImageView+JCImageView.swift in Sources */,
+				BD25FEC81EE92D9400C14D67 /* MoreCell.swift in Sources */,
 				BDDE49871EE15F700010B96E /* String+JCString.swift in Sources */,
 				BDDE49881EE15F700010B96E /* UIAlertController+IOSUtil.swift in Sources */,
 				BD55F83F1EE163AD0012D454 /* DLAVAlertViewTextFieldTheme.m in Sources */,

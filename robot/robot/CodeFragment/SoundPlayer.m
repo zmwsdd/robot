@@ -32,7 +32,7 @@ static SoundPlayer *soundplayer = nil;
     
     if(string && string.length > 0){
         [Tool volumeBig]; // 播放声音大
-        [Tool changeVolumeToMax];
+        [Tool changeVolumeToMax]; /// 暂时不加
         // 日文：ja-JP  英文：en-US
         AVSpeechUtterance *utterance = [AVSpeechUtterance speechUtteranceWithString:string];
         utterance.volume = 1.0;
