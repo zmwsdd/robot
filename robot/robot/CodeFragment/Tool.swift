@@ -344,5 +344,18 @@ public class Tool: NSObject {
             exit(0)
         }
     }
+    
+    /// 统计进入页面的方法
+    public class func beginLogPageView(title: String) {
+        MobClick.beginLogPageView(title)
+    }
 
+    /// 统计离开页面的方法
+    public class func endLogPageView(title: String) {
+        MobClick.endLogPageView(title)
+    }
+   /// 友盟的点击事件
+    public class func event(eventId: String) {
+        MobClick.event(eventId)
+    }
 }
