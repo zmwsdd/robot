@@ -164,8 +164,11 @@ class HomeVC: SwifBaseViewController,SFSpeechRecognitionTaskDelegate,CLLocationM
             return
         }
         self.stopListening()
-        if (self.resultStr?.contains("天气"))! {
-            SoundPlayer.defaltManager().stopAction()
+        if (self.resultStr?.contains("用英语怎么说"))! || (self.resultStr?.contains("用英文怎么说"))! || (self.resultStr?.contains("用英语怎么"))! || (self.resultStr?.contains("用英文怎么"))! {
+            let tempStr: NSString = NSString.init(string: self.resultStr!)
+            let location = tempStr.range(of: "用英").location
+            self.fanyiAction(queryStr: tempStr.substring(to: location))
+        } else if (self.resultStr?.contains("天气"))! {
             self.weatherAction()
         } else if (self.resultStr?.contains("重读"))! || (self.resultStr?.contains("重复"))! || (self.resultStr?.contains("再读"))!{
             SoundPlayer.defaltManager().stopAction()
@@ -275,7 +278,11 @@ class HomeVC: SwifBaseViewController,SFSpeechRecognitionTaskDelegate,CLLocationM
             self.resultStr = transcription.formattedString
             SLog(self.resultStr)
             SLog("resultStr ==== \(String(describing: self.resultStr!))")
-            if (self.resultStr?.contains("天气"))! {
+            if (self.resultStr?.contains("用英语怎么说"))! || (self.resultStr?.contains("用英文怎么说"))! || (self.resultStr?.contains("用英语怎么"))! || (self.resultStr?.contains("用英文怎么"))! {
+                let tempStr: NSString = NSString.init(string: self.resultStr!)
+                let location = tempStr.range(of: "用英").location
+                self.fanyiAction(queryStr: tempStr.substring(to: location))
+            } else if (self.resultStr?.contains("天气"))! {
                 self.weatherAction()
             } else if (self.resultStr?.contains("重读"))! || (self.resultStr?.contains("重复"))! || (self.resultStr?.contains("再读"))!{
                 self.canStarSpeechFlag = false
@@ -518,6 +525,44 @@ class HomeVC: SwifBaseViewController,SFSpeechRecognitionTaskDelegate,CLLocationM
                 }
             }
             }.resume()
+    }
+    
+    /// - 百度翻译的请求百度翻译的请求百度翻译的请求百度翻译的请求百度翻译的请求百度翻译的请求百度翻译的请求
+    func fanyiAction(queryStr: String) {
+        SLog("queryStr====\(queryStr)")
+        if Tool.isCallFrequent(funcName: "fanyiAction") {
+            return;
+        }
+        self.stopListening()
+        
+        let pramas = NSMutableDictionary()
+        let salt: Int = ((Int)(arc4random()))%1000
+        let tempStr = String.init(format: "%@%@%d%@",kBaiduFanyi_appId,queryStr,salt,kBaiduFanyi_SecretKey)
+        let tempSig = NSString(string: tempStr)
+        let signature = tempSig.md5()
+        pramas.setValue(queryStr, forKey: "q") // 要翻译的文案
+        pramas.setValue("auto", forKey: "from") // 源语言
+        pramas.setValue("en", forKey: "to")
+        pramas.setValue(kBaiduFanyi_appId, forKey: "appid")
+        pramas.setValue(salt, forKey: "salt")
+        pramas.setValue(signature, forKey: "sign")
+        
+        let url = String.init(format: kApi_baidu_fanyi)
+        self.addTitle(titleString: "翻译中...")
+        askTitleV.text = self.resultStr
+        // 这里必须用get请求，因为好多第三方都不是同时支持get和post的
+        _ = JHNetwork.shared.postForJSON(url: url, refreshCache: true, parameters: pramas as? [String : Any], finished: {[unowned self] (result, error) in
+            SLog(result)
+            DispatchQueue.main.async {
+                if let englistStr = result?["trans_result"][0]["dst"].rawString() {
+                    SoundPlayer.defaltManager().play(englistStr, languageType: LanguageTypeEnglish)
+                    self.textV.text = englistStr
+                }
+                
+                self.addTitle(titleString: "机器人")
+
+            }
+        })
     }
     
 }

@@ -21,8 +21,9 @@ class MoreCell: UITableViewCell {
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        self.nameLbl = Tool.initALabel(frame: .zero, textString: "", font: FONT_PingFang(fontSize: 14), textColor: UIColor.getTitleColorSwift())
+        self.nameLbl = Tool.initALabel(frame: .zero, textString: "", font: FONT_PingFang(fontSize: 14), textColor: UIColor.getMainColorSwift())
         self.nameLbl.textAlignment = .left
+        self.nameLbl.numberOfLines = 0
         self.contentView.addSubview(self.nameLbl)
         constrain(nameLbl) { nameLbl in
             nameLbl.left == nameLbl.superview!.left + 10

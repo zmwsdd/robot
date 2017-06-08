@@ -21,7 +21,10 @@ let kSRequest_key            =   ""
 // 业务逻辑的具体API：
 /// 阿凡达天气数据的接口
 /// YY天气-7天的天气预报 + 城市名字例如：武汉
-let kYYWeather_url          =   "http://api.avatardata.cn/Weather/Query?key=f06098f5db9f43fbbfe04aba61bb94fb&cityname=%@"
+let kYYWeather_url           =   "http://api.avatardata.cn/Weather/Query?key=f06098f5db9f43fbbfe04aba61bb94fb&cityname=%@"
 
 /// 百度新闻搜索json数据
-let kBaidu_new_url          =   "http://www.baidu.com/s?wd=%@&pn=0&rn=3&tn=json"
+let kBaidu_new_url           =   "http://www.baidu.com/s?wd=%@&pn=0&rn=3&tn=json"
+
+/// 百度翻译的api
+let kApi_baidu_fanyi         =   "http://api.fanyi.baidu.com/api/trans/vip/translate"

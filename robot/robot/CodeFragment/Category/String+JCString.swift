@@ -252,7 +252,6 @@ extension String {
         let formatter = NumberFormatter.init();
         formatter.numberStyle = style;
         return formatter.string(from: number)!;
-    }
-    
+    }    
     
 }

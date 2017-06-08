@@ -19,3 +19,5 @@
 #import <UMMobClick/MobClick.h>
 // buggly统计
 #import <Bugly/Bugly.h>
+
+#import "NSString+IOSUtil.h"

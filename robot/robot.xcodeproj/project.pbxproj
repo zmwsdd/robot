@@ -10,6 +10,7 @@
 		203BCB68ABC045BBBEB03D52 /* Pods_robot.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F791054CE002CD4446437FDE /* Pods_robot.framework */; };
 		BD1E89891EE542600016C613 /* ThridMacros.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1E89881EE542600016C613 /* ThridMacros.swift */; };
 		BD25FEC81EE92D9400C14D67 /* MoreCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD25FEC71EE92D9400C14D67 /* MoreCell.swift */; };
+		BD25FECB1EE93A9200C14D67 /* NSString+IOSUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = BD25FECA1EE93A9200C14D67 /* NSString+IOSUtil.m */; };
 		BD55F80B1EE162BF0012D454 /* EmptyView.m in Sources */ = {isa = PBXBuildFile; fileRef = BD55F80A1EE162BF0012D454 /* EmptyView.m */; };
 		BD55F8301EE163AD0012D454 /* hud_error@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BD55F80D1EE163AD0012D454 /* hud_error@2x.png */; };
 		BD55F8311EE163AD0012D454 /* hud_error@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BD55F80E1EE163AD0012D454 /* hud_error@3x.png */; };
@@ -84,6 +85,8 @@
 		B0D71FCEC5BE973EB2A2A8AB /* Pods-robot.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-robot.debug.xcconfig"; path = "Pods/Target Support Files/Pods-robot/Pods-robot.debug.xcconfig"; sourceTree = "<group>"; };
 		BD1E89881EE542600016C613 /* ThridMacros.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThridMacros.swift; sourceTree = "<group>"; };
 		BD25FEC71EE92D9400C14D67 /* MoreCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoreCell.swift; sourceTree = "<group>"; };
+		BD25FEC91EE93A9200C14D67 /* NSString+IOSUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+IOSUtil.h"; sourceTree = "<group>"; };
+		BD25FECA1EE93A9200C14D67 /* NSString+IOSUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+IOSUtil.m"; sourceTree = "<group>"; };
 		BD55F8041EE162020012D454 /* robot-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "robot-Bridging-Header.h"; sourceTree = "<group>"; };
 		BD55F8091EE162BF0012D454 /* EmptyView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmptyView.h; sourceTree = "<group>"; };
 		BD55F80A1EE162BF0012D454 /* EmptyView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmptyView.m; sourceTree = "<group>"; };
@@ -491,6 +494,8 @@
 				BDDE49691EE15F700010B96E /* NSMutableAttributedString+JCAttributedString.swift */,
 				BDDE496A1EE15F700010B96E /* NSNumber+JCNumber.swift */,
 				BDDE496B1EE15F700010B96E /* String+JCString.swift */,
+				BD25FEC91EE93A9200C14D67 /* NSString+IOSUtil.h */,
+				BD25FECA1EE93A9200C14D67 /* NSString+IOSUtil.m */,
 				BDDE496C1EE15F700010B96E /* UIAlertController+IOSUtil.swift */,
 				BDDE496D1EE15F700010B96E /* UIButton+IOSUtil.swift */,
 				BDDE496E1EE15F700010B96E /* UIColor+JCColor.swift */,
@@ -647,6 +652,7 @@
 				BDDE49481EE15EED0010B96E /* SwiftBaseModel.swift in Sources */,
 				BD55F8361EE163AD0012D454 /* ProgressHUD.m in Sources */,
 				BDDE49941EE15F700010B96E /* UIView+IOSUtil.swift in Sources */,
+				BD25FECB1EE93A9200C14D67 /* NSString+IOSUtil.m in Sources */,
 				BDDE494C1EE15F470010B96E /* XHTabBar.swift in Sources */,
 				BDDE497F1EE15F700010B96E /* Data+JCData.swift in Sources */,
 				BDDE49861EE15F700010B96E /* NSNumber+JCNumber.swift in Sources */,

@@ -20,10 +20,11 @@ class MoreVC: SwifBaseViewController,UITableViewDelegate,UITableViewDataSource {
     
     func initTableViewAndData() {
         dataArr = NSMutableArray()
-        dataArr.append("您可以提问日常生活中的问题（支持语音播放~）")
-        dataArr.append("您可以提问今天天气或明天天气（支持语音播放~）")
-        dataArr.append("您可以点击右上角网页搜索（这里也支持语音播放哟~）")
-
+        dataArr.append("提问问题功能：日常生活问题（支持语音播放~）")
+        dataArr.append("提问天气功能：今天天气或明天天气（支持语音播放~）")
+        dataArr.append("网页搜索功能：首页右上角（这里也支持语音播放哟~）")
+        dataArr.append("词句翻译功能：早上好用英语怎么说（目前只支持英语）")
+        dataArr.append("重复播放功能：重读一次/重复一次")
         
         tableView = UITableView(frame: CGRect.init(x: 0, y: NAVIGATIONBAR_HEIGHT, width: SCREEN_WIDTH, height: SCREEN_HEIGHT - NAVIGATIONBAR_HEIGHT), style: .grouped)
         tableView.delegate = self
@@ -38,6 +39,13 @@ class MoreVC: SwifBaseViewController,UITableViewDelegate,UITableViewDataSource {
     // MARK: 表格代理相关
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        
+        let str = dataArr.object(at: indexPath.row) as! String
+        let height = str.sizeFor(size: CGSize.init(width: SCREEN_WIDTH - 20, height: 999), font: FONT_PingFang(fontSize: 14)).height
+        return height + 30
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
