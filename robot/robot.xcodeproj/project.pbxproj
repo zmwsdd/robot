@@ -31,8 +31,8 @@
 		BD55F8441EE1696F0012D454 /* UIView+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = BD55F8431EE1696F0012D454 /* UIView+Utils.m */; };
 		BD55F8471EE16AE50012D454 /* UIColor+IOSUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = BD55F8461EE16AE50012D454 /* UIColor+IOSUtils.m */; };
 		BD55F84B1EE23FFF0012D454 /* SoundPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = BD55F84A1EE23FFF0012D454 /* SoundPlayer.m */; };
-		BD57867B1EE7E2D20096AC45 /* WebViewProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5786791EE7E2D20096AC45 /* WebViewProgressView.swift */; };
-		BD57867C1EE7E2D20096AC45 /* WKWebViewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD57867A1EE7E2D20096AC45 /* WKWebViewVC.swift */; };
+		BD791B5D1EE8DE3C0029BFEF /* WKWebViewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD791B5B1EE8DE3C0029BFEF /* WKWebViewVC.swift */; };
+		BD791B5E1EE8DE3C0029BFEF /* WebViewProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD791B5C1EE8DE3C0029BFEF /* WebViewProgressView.swift */; };
 		BDDE49421EE15D160010B96E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BDDE49341EE15D160010B96E /* Assets.xcassets */; };
 		BDDE49431EE15D160010B96E /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BDDE49361EE15D160010B96E /* Info.plist */; };
 		BDDE49441EE15D160010B96E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDDE49411EE15D160010B96E /* AppDelegate.swift */; };
@@ -121,8 +121,8 @@
 		BD55F8461EE16AE50012D454 /* UIColor+IOSUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+IOSUtils.m"; sourceTree = "<group>"; };
 		BD55F8491EE23FFF0012D454 /* SoundPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoundPlayer.h; sourceTree = "<group>"; };
 		BD55F84A1EE23FFF0012D454 /* SoundPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SoundPlayer.m; sourceTree = "<group>"; };
-		BD5786791EE7E2D20096AC45 /* WebViewProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WebViewProgressView.swift; path = "../../NiaoYuTong-IOS/niaoyutong/niaoyutong/WebViewProgressView.swift"; sourceTree = "<group>"; };
-		BD57867A1EE7E2D20096AC45 /* WKWebViewVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WKWebViewVC.swift; path = "../../NiaoYuTong-IOS/niaoyutong/niaoyutong/WKWebViewVC.swift"; sourceTree = "<group>"; };
+		BD791B5B1EE8DE3C0029BFEF /* WKWebViewVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WKWebViewVC.swift; sourceTree = "<group>"; };
+		BD791B5C1EE8DE3C0029BFEF /* WebViewProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewProgressView.swift; sourceTree = "<group>"; };
 		BDDE491A1EE1587E0010B96E /* robot.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = robot.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BDDE49341EE15D160010B96E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BDDE49361EE15D160010B96E /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -283,19 +283,18 @@
 			name = SoundPlayer;
 			sourceTree = "<group>";
 		};
-		BD5786781EE7E2B40096AC45 /* WebView */ = {
+		BD5814921EE8022500A1FDC2 /* WebVC */ = {
 			isa = PBXGroup;
 			children = (
-				BD5786791EE7E2D20096AC45 /* WebViewProgressView.swift */,
-				BD57867A1EE7E2D20096AC45 /* WKWebViewVC.swift */,
+				BD791B5B1EE8DE3C0029BFEF /* WKWebViewVC.swift */,
+				BD791B5C1EE8DE3C0029BFEF /* WebViewProgressView.swift */,
 			);
-			name = WebView;
+			path = WebVC;
 			sourceTree = "<group>";
 		};
 		BDDE49111EE1587E0010B96E = {
 			isa = PBXGroup;
 			children = (
-				BD5786781EE7E2B40096AC45 /* WebView */,
 				BDDE491C1EE1587E0010B96E /* robot */,
 				BDDE491B1EE1587E0010B96E /* Products */,
 				38F70936E1C2A3445BE54AB4 /* Pods */,
@@ -314,6 +313,7 @@
 		BDDE491C1EE1587E0010B96E /* robot */ = {
 			isa = PBXGroup;
 			children = (
+				BD5814921EE8022500A1FDC2 /* WebVC */,
 				BDDE49401EE15D160010B96E /* AppDelegate */,
 				BDDE493C1EE15D160010B96E /* HomeVC */,
 				BDDE493F1EE15D160010B96E /* Base */,
@@ -657,12 +657,13 @@
 				BDDE49901EE15F700010B96E /* UIScrollView+JCScrollView.swift in Sources */,
 				BDDE498F1EE15F700010B96E /* UIResponder+JCResponder.swift in Sources */,
 				BD55F83A1EE163AD0012D454 /* EMAlertView.m in Sources */,
-				BD57867C1EE7E2D20096AC45 /* WKWebViewVC.swift in Sources */,
 				BD55F83B1EE163AD0012D454 /* DLAVAlertView.m in Sources */,
 				BD55F8381EE163AD0012D454 /* FDDemoScrollView.m in Sources */,
 				BDDE49891EE15F700010B96E /* UIButton+IOSUtil.swift in Sources */,
 				BD55F8401EE163AD0012D454 /* DLAVAlertViewTheme.m in Sources */,
 				BDDE498A1EE15F700010B96E /* UIColor+JCColor.swift in Sources */,
+				BD791B5E1EE8DE3C0029BFEF /* WebViewProgressView.swift in Sources */,
+				BD791B5D1EE8DE3C0029BFEF /* WKWebViewVC.swift in Sources */,
 				BDDE497C1EE15F700010B96E /* RHRefreshFooter.swift in Sources */,
 				BD55F8371EE163AD0012D454 /* FLFMDBQueueManager.m in Sources */,
 				BDDE49811EE15F700010B96E /* DispatchQueue+IOSUtil.swift in Sources */,
@@ -685,7 +686,6 @@
 				BDDE49911EE15F700010B96E /* UITableViewCell+JCSeparator.swift in Sources */,
 				BDDE49491EE15EED0010B96E /* SwiftBaseCell.swift in Sources */,
 				BDDE494A1EE15EED0010B96E /* SwifBaseViewController.swift in Sources */,
-				BD57867B1EE7E2D20096AC45 /* WebViewProgressView.swift in Sources */,
 				BD55F8391EE163AD0012D454 /* UINavigationController+FDFullscreenPopGesture.m in Sources */,
 				BD55F8411EE163AD0012D454 /* CustomIOSAlertView.m in Sources */,
 				BDDE497E1EE15F700010B96E /* Bundle+JCBundle.swift in Sources */,

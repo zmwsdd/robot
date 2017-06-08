@@ -112,7 +112,7 @@ extension WKWebView {
         if progressView == nil {
             let view = WebViewProgressView()
             view.frame = CGRect(x: 0, y: 64, width: 0, height: 3)
-            view.backgroundColor = UIColor.getMain()
+            view.backgroundColor = UIColor.getMainColorSwift()
             view.tag = GDBProgressViewTag
             view.autoresizingMask = .flexibleWidth
             self.addSubview(view)

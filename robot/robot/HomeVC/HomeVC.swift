@@ -35,15 +35,7 @@ class HomeVC: SwifBaseViewController,SFSpeechRecognitionTaskDelegate,CLLocationM
         super.viewDidLoad()
         canStarSpeechFlag = true
         self.addTitle(titleString: NSLocalizedString("机器人", comment: ""))
-        self.rightButton(name: "百度一下", image: nil) { [unowned self] (btn) in
-            let vc = WKWebViewVC()
-            var str = self.askTitleV.text
-            if String.isEmptyString(str: self.askTitleV.text) {
-                str = self.resultStr ?? ""
-            }
-            vc.urlStr = String.init(format: "https://www.baidu.com/s?wd=%@",str!)
-            self.navigationController?.pushViewController(vc, animated: true)
-        }
+        
         self.initLocation()
         // 初始化view
         self.initAllView()
@@ -70,6 +62,17 @@ class HomeVC: SwifBaseViewController,SFSpeechRecognitionTaskDelegate,CLLocationM
         canStarSpeechFlag = true
         // 开始识别
         self.beginListening()
+        self.navigationItem.rightBarButtonItems = nil
+        self.rightButton(name: "百度一下", image: nil) { [unowned self] (btn) in
+            let vc = WKWebViewVC()
+            var str = self.askTitleV.text
+            if String.isEmptyString(str: self.askTitleV.text) {
+                str = self.resultStr ?? ""
+            }
+            vc.hidesBottomBarWhenPushed = true
+            vc.urlStr = String.init(format: "https://www.baidu.com/s?wd=%@",str!)
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {

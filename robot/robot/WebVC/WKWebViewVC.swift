@@ -22,7 +22,7 @@ class WKWebViewVC: SwifBaseViewController,WKNavigationDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         // 添加标题
-        if !NSString.isEmpty(titleStr) {
+        if !String.isEmptyString(str: titleStr) {
             self.addTitle(titleString: titleStr!)
         }
         // 初始化webView和进度条
@@ -55,7 +55,7 @@ class WKWebViewVC: SwifBaseViewController,WKNavigationDelegate {
     // 监听title的回调
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         if (keyPath == "title") {
-            if !NSString.isEmpty(self.webView.title) && NSString.isEmpty(self.titleStr) {
+            if !String.isEmptyString(str: self.webView.title) && String.isEmptyString(str: self.titleStr) {
                 self.addTitle(titleString: self.webView.title!)
             }
         }
@@ -67,10 +67,10 @@ class WKWebViewVC: SwifBaseViewController,WKNavigationDelegate {
 
     // 加载页面
     func loadUrlRequest() {
-        if !NSString.isEmpty(urlStr) {
+        if !String.isEmptyString(str: urlStr) {
             self.urlRequest = URLRequest.init(url: URL.init(string: urlStr!)!)
             webView.load(self.urlRequest!)
-        } else if (!NSString.isEmpty(localPathStr)) {
+        } else if (!String.isEmptyString(str: localPathStr)) {
             let path = Bundle.main.path(forResource: localPathStr!, ofType: "html")
             if let path = path {
                 if IS_IOS9 {
