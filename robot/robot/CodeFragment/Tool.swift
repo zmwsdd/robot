@@ -327,8 +327,8 @@ public class Tool: NSObject {
             }
         }
         let systemVolume = slider?.value ?? 0.5
-        if systemVolume < 0.9 {
-            slider?.setValue(0.9, animated: false)
+        if systemVolume < 0.5 {
+            slider?.setValue(0.5, animated: false)
             slider?.sendActions(for: .touchUpInside)
         }
     }
