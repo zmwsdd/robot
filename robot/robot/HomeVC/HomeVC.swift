@@ -96,8 +96,6 @@ class HomeVC: SwifBaseViewController,SFSpeechRecognitionTaskDelegate,CLLocationM
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         //精确到1000米,距离过滤器，定义了设备移动后获得位置信息的最小距离
         locationManager.distanceFilter = kCLLocationAccuracyKilometer
-        //如果是IOS8及以上版本需调用这个方法
-        locationManager.requestAlwaysAuthorization()
         //使用应用程序期间允许访问位置数据
         locationManager.requestWhenInUseAuthorization();
         //启动定位
