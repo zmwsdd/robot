@@ -369,7 +369,7 @@ class HomeVC: SwifBaseViewController,SFSpeechRecognitionTaskDelegate,CLLocationM
                     if wind0 == wind1 {
                         wind = wind0
                     }
-                    weatherStr = String.init(format: "主人我已经查询成功！今天%@，%@，%@",temper,rain,wind)
+                    weatherStr = String.init(format: "主人我已经查询成功！%@，今天%@，%@，%@",self.currentCity,temper,rain,wind)
                     if (self.resultStr?.contains("明天"))! {
                         // 温度
                         var temp0 = "0" // 默认的最低温度
@@ -413,7 +413,7 @@ class HomeVC: SwifBaseViewController,SFSpeechRecognitionTaskDelegate,CLLocationM
                         if wind0 == wind1 {
                             wind = wind0
                         }
-                        weatherStr = String.init(format: "主人我已经查询成功！明天%@，%@，%@",temper,rain,wind)
+                        weatherStr = String.init(format: "主人我已经查询成功！%@,明天%@，%@，%@",self.currentCity,temper,rain,wind)
                     }
                 } else if arr.count > 0 {
                     // 温度
@@ -458,7 +458,7 @@ class HomeVC: SwifBaseViewController,SFSpeechRecognitionTaskDelegate,CLLocationM
                     if wind0 == wind1 {
                         wind = wind0
                     }
-                    weatherStr = String.init(format: "主人我已经查询成功！今天%@，%@，%@",temper,rain,wind)
+                    weatherStr = String.init(format: "主人我已经查询成功！%@,今天%@，%@，%@",self.currentCity,temper,rain,wind)
                 }
             }
             self.textV.text = weatherStr
@@ -509,8 +509,12 @@ class HomeVC: SwifBaseViewController,SFSpeechRecognitionTaskDelegate,CLLocationM
                 let firstStr: String = totalResultStr.getSubStr(beginStr: "<div class=\"result-summary\">", endStr: "</div><div class=\"result-info sIt_info\">")
                 let secondTemp = totalResultStr.removeFirstSubString(beginStr: "<div class=\"result-summary\">", endStr: "</div><div class=\"result-info sIt_info\">")
                 let secondStr = secondTemp.getSubStr(beginStr: "<div class=\"result-summary\">", endStr: "</div><div class=\"result-info sIt_info\">")
-                let lastStr1 = firstStr.removeAllSubString(beginStr: "<", endStr: ">")
-                let lastStr2 = secondStr.removeAllSubString(beginStr: "<", endStr: ">")
+                var lastStr1 = firstStr.removeAllSubString(beginStr: "<", endStr: ">")
+                var lastStr2 = secondStr.removeAllSubString(beginStr: "<", endStr: ">")
+                lastStr1 = lastStr1.replacingOccurrences(of: "<em>", with: "")
+                lastStr1 = lastStr1.replacingOccurrences(of: "</em>", with: "")
+                lastStr2 = lastStr2.replacingOccurrences(of: "<em>", with: "")
+                lastStr2 = lastStr2.replacingOccurrences(of: "</em>", with: "")
                 DispatchQueue.main.async {
                     if String.isEmptyString(str: secondStr) {
                         self.textV.text = String.init(format: "%@",lastStr1)
