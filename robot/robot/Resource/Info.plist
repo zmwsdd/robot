@@ -50,11 +50,6 @@
 	<string>请求打开图片库</string>
 	<key>NSSpeechRecognitionUsageDescription</key>
 	<string>请求语音识别</string>
-	<key>UIBackgroundModes</key>
-	<array>
-		<string>audio</string>
-		<string>location</string>
-	</array>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>
